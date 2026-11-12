@@ -939,11 +939,11 @@
     },
     {
       "id": "pitta",
-      "name": "Pitta bread",
+      "name": "Pita bread",
       "aliases": [
         "pita",
-        "pita bread",
-        "pitta"
+        "pitta",
+        "pitta bread"
       ],
       "group": "grains",
       "emoji": "🫓",
@@ -954,7 +954,7 @@
         "description": "Bread, pita, white, enriched"
       },
       "serving": {
-        "label": "1 large pitta",
+        "label": "1 large pita",
         "grams": 60
       }
     },
@@ -1865,10 +1865,10 @@
     },
     {
       "id": "crisps",
-      "name": "Potato crisps",
+      "name": "Potato chips",
       "aliases": [
         "crisps",
-        "potato chips"
+        "potato crisps"
       ],
       "group": "veg",
       "emoji": "🥔",
@@ -1879,7 +1879,7 @@
         "description": "Snacks, potato chips, plain, salted"
       },
       "serving": {
-        "label": "1 oz (about 22 crisps)",
+        "label": "1 oz (about 22 chips)",
         "grams": 28
       }
     },
@@ -2086,12 +2086,13 @@
     },
     {
       "id": "red-pepper",
-      "name": "Red pepper (raw)",
+      "name": "Red capsicum (raw)",
       "aliases": [
         "bell pepper",
         "capsicum",
         "sweet pepper",
-        "red bell pepper"
+        "red bell pepper",
+        "red pepper"
       ],
       "group": "veg",
       "emoji": "🫑",
@@ -2227,12 +2228,12 @@
     },
     {
       "id": "sweetcorn",
-      "name": "Sweetcorn (boiled)",
+      "name": "Corn on the cob (boiled)",
       "aliases": [
         "corn",
         "sweet corn",
-        "corn on the cob",
-        "maize"
+        "maize",
+        "sweetcorn"
       ],
       "group": "veg",
       "emoji": "🌽",
@@ -2249,10 +2250,10 @@
     },
     {
       "id": "courgette",
-      "name": "Courgette (raw)",
+      "name": "Zucchini (raw)",
       "aliases": [
-        "zucchini",
-        "summer squash"
+        "summer squash",
+        "courgette"
       ],
       "group": "veg",
       "emoji": "🥒",
@@ -2263,16 +2264,16 @@
         "description": "Squash, summer, zucchini, includes skin, raw"
       },
       "serving": {
-        "label": "1 medium courgette",
+        "label": "1 medium zucchini",
         "grams": 196
       }
     },
     {
       "id": "aubergine",
-      "name": "Aubergine (boiled)",
+      "name": "Eggplant (boiled)",
       "aliases": [
-        "eggplant",
-        "brinjal"
+        "brinjal",
+        "aubergine"
       ],
       "group": "veg",
       "emoji": "🍆",
@@ -2406,12 +2407,12 @@
     },
     {
       "id": "snow-peas",
-      "name": "Mangetout (raw)",
+      "name": "Snow peas (raw)",
       "aliases": [
-        "snow peas",
         "sugar snap peas",
         "snap peas",
-        "edible-podded peas"
+        "edible-podded peas",
+        "mangetout"
       ],
       "group": "veg",
       "emoji": "🫛",
@@ -3004,12 +3005,12 @@
     },
     {
       "id": "melon",
-      "name": "Cantaloupe melon",
+      "name": "Rockmelon",
       "aliases": [
         "cantaloupe",
-        "rockmelon",
         "melon",
-        "muskmelon"
+        "muskmelon",
+        "cantaloupe melon"
       ],
       "group": "fruit",
       "emoji": "🍈",
