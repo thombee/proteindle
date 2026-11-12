@@ -1,0 +1,3284 @@
+{
+  "foods": [
+    {
+      "id": "lentils",
+      "name": "Lentils (cooked)",
+      "aliases": [
+        "green lentils",
+        "brown lentils",
+        "lentil"
+      ],
+      "group": "beans",
+      "emoji": "🫘",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 172421,
+        "description": "Lentils, mature seeds, cooked, boiled, without salt"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 198
+      }
+    },
+    {
+      "id": "chickpeas",
+      "name": "Chickpeas (cooked)",
+      "aliases": [
+        "garbanzo beans",
+        "garbanzos",
+        "chana",
+        "ceci beans",
+        "chickpea"
+      ],
+      "group": "beans",
+      "emoji": "🫘",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 173757,
+        "description": "Chickpeas (garbanzo beans, bengal gram), mature seeds, cooked, boiled, without salt"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 164
+      }
+    },
+    {
+      "id": "black-beans",
+      "name": "Black beans (cooked)",
+      "aliases": [
+        "turtle beans",
+        "frijoles negros"
+      ],
+      "group": "beans",
+      "emoji": "🫘",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 173735,
+        "description": "Beans, black, mature seeds, cooked, boiled, without salt"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 172
+      }
+    },
+    {
+      "id": "kidney-beans",
+      "name": "Kidney beans (cooked)",
+      "aliases": [
+        "red kidney beans",
+        "rajma"
+      ],
+      "group": "beans",
+      "emoji": "🫘",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 175194,
+        "description": "Beans, kidney, red, mature seeds, cooked, boiled, without salt"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 177
+      }
+    },
+    {
+      "id": "pinto-beans",
+      "name": "Pinto beans (cooked)",
+      "aliases": [
+        "pinto"
+      ],
+      "group": "beans",
+      "emoji": "🫘",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 175200,
+        "description": "Beans, pinto, mature seeds, cooked, boiled, without salt"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 171
+      }
+    },
+    {
+      "id": "white-beans",
+      "name": "White beans (cooked)",
+      "aliases": [
+        "cannellini beans",
+        "cannellini"
+      ],
+      "group": "beans",
+      "emoji": "🫘",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 175203,
+        "description": "Beans, white, mature seeds, cooked, boiled, without salt"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 179
+      }
+    },
+    {
+      "id": "navy-beans",
+      "name": "Navy beans (cooked)",
+      "aliases": [
+        "haricot beans",
+        "pea beans"
+      ],
+      "group": "beans",
+      "emoji": "🫘",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 173746,
+        "description": "Beans, navy, mature seeds, cooked, boiled, without salt"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 182
+      }
+    },
+    {
+      "id": "butter-beans",
+      "name": "Butter beans (cooked)",
+      "aliases": [
+        "lima beans",
+        "large lima beans"
+      ],
+      "group": "beans",
+      "emoji": "🫘",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 174253,
+        "description": "Lima beans, large, mature seeds, cooked, boiled, without salt"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 188
+      }
+    },
+    {
+      "id": "black-eyed-peas",
+      "name": "Black-eyed peas (cooked)",
+      "aliases": [
+        "black-eyed beans",
+        "cowpeas",
+        "blackeyes"
+      ],
+      "group": "beans",
+      "emoji": "🫘",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 173759,
+        "description": "Cowpeas, common (blackeyes, crowder, southern), mature seeds, cooked, boiled, without salt"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 171
+      }
+    },
+    {
+      "id": "split-peas",
+      "name": "Split peas (cooked)",
+      "aliases": [
+        "yellow split peas",
+        "green split peas"
+      ],
+      "group": "beans",
+      "emoji": "🫘",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 172429,
+        "description": "Peas, split, mature seeds, cooked, boiled, without salt"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 196
+      }
+    },
+    {
+      "id": "mung-beans",
+      "name": "Mung beans (cooked)",
+      "aliases": [
+        "moong beans",
+        "green gram",
+        "moong dal"
+      ],
+      "group": "beans",
+      "emoji": "🫘",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 174257,
+        "description": "Mung beans, mature seeds, cooked, boiled, without salt"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 202
+      }
+    },
+    {
+      "id": "fava-beans",
+      "name": "Fava beans (cooked)",
+      "aliases": [
+        "broad beans",
+        "ful"
+      ],
+      "group": "beans",
+      "emoji": "🫘",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 173753,
+        "description": "Broadbeans (fava beans), mature seeds, cooked, boiled, without salt"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 170
+      }
+    },
+    {
+      "id": "adzuki-beans",
+      "name": "Adzuki beans (cooked)",
+      "aliases": [
+        "azuki beans",
+        "aduki beans"
+      ],
+      "group": "beans",
+      "emoji": "🫘",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 173728,
+        "description": "Beans, adzuki, mature seeds, cooked, boiled, without salt"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 230
+      }
+    },
+    {
+      "id": "lupini-beans",
+      "name": "Lupini beans (cooked)",
+      "aliases": [
+        "lupins",
+        "lupin beans"
+      ],
+      "group": "beans",
+      "emoji": "🫘",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 172424,
+        "description": "Lupins, mature seeds, cooked, boiled, without salt"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 166
+      }
+    },
+    {
+      "id": "borlotti-beans",
+      "name": "Borlotti beans (cooked)",
+      "aliases": [
+        "cranberry beans",
+        "roman beans"
+      ],
+      "group": "beans",
+      "emoji": "🫘",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 173736,
+        "description": "Beans, cranberry (roman), mature seeds, cooked, boiled, without salt"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 177
+      }
+    },
+    {
+      "id": "pigeon-peas",
+      "name": "Pigeon peas (cooked)",
+      "aliases": [
+        "gungo peas",
+        "toor dal",
+        "red gram"
+      ],
+      "group": "beans",
+      "emoji": "🫘",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 172437,
+        "description": "Pigeon peas (red gram), mature seeds, cooked, boiled, without salt"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 168
+      }
+    },
+    {
+      "id": "baked-beans",
+      "name": "Baked beans",
+      "aliases": [
+        "beans in tomato sauce",
+        "vegetarian baked beans"
+      ],
+      "group": "beans",
+      "emoji": "🫘",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 175182,
+        "description": "Beans, baked, canned, plain or vegetarian"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 254
+      }
+    },
+    {
+      "id": "hummus",
+      "name": "Hummus",
+      "aliases": [
+        "houmous",
+        "humous",
+        "hummous",
+        "chickpea dip"
+      ],
+      "group": "beans",
+      "emoji": "🫘",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 174289,
+        "description": "Hummus, commercial"
+      },
+      "serving": {
+        "label": "2 tbsp",
+        "grams": 30
+      },
+      "servingSource": "chosen"
+    },
+    {
+      "id": "falafel",
+      "name": "Falafel",
+      "aliases": [
+        "felafel",
+        "falafels"
+      ],
+      "group": "beans",
+      "emoji": "🧆",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 172455,
+        "description": "Falafel, home-prepared"
+      },
+      "serving": {
+        "label": "3 patties",
+        "grams": 51
+      },
+      "servingSource": "chosen",
+      "fibreMissing": true
+    },
+    {
+      "id": "refried-beans",
+      "name": "Refried beans",
+      "aliases": [
+        "frijoles refritos"
+      ],
+      "group": "beans",
+      "emoji": "🫘",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 174296,
+        "description": "Refried beans, canned, vegetarian"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 242
+      }
+    },
+    {
+      "id": "peas",
+      "name": "Peas (cooked)",
+      "aliases": [
+        "green peas",
+        "garden peas",
+        "frozen peas",
+        "petits pois"
+      ],
+      "group": "beans",
+      "emoji": "🫛",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170017,
+        "description": "Peas, green, frozen, cooked, boiled, drained, without salt"
+      },
+      "serving": {
+        "label": "½ cup",
+        "grams": 80
+      }
+    },
+    {
+      "id": "tempeh",
+      "name": "Tempeh",
+      "aliases": [
+        "tempe"
+      ],
+      "group": "soy",
+      "emoji": "🌱",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 174272,
+        "description": "Tempeh"
+      },
+      "serving": {
+        "label": "½ cup",
+        "grams": 83
+      },
+      "servingSource": "chosen",
+      "fibreMissing": true
+    },
+    {
+      "id": "tofu",
+      "name": "Tofu (firm)",
+      "aliases": [
+        "firm tofu",
+        "bean curd",
+        "beancurd"
+      ],
+      "group": "soy",
+      "emoji": "🌱",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 172448,
+        "description": "Tofu, firm, prepared with calcium sulfate and magnesium chloride (nigari)"
+      },
+      "serving": {
+        "label": "¼ block",
+        "grams": 81
+      }
+    },
+    {
+      "id": "silken-tofu",
+      "name": "Silken tofu",
+      "aliases": [
+        "soft tofu",
+        "japanese tofu"
+      ],
+      "group": "soy",
+      "emoji": "🌱",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 172461,
+        "description": "MORI-NU, Tofu, silken, firm"
+      },
+      "serving": {
+        "label": "1 slice",
+        "grams": 84
+      }
+    },
+    {
+      "id": "fried-tofu",
+      "name": "Fried tofu",
+      "aliases": [
+        "tofu puffs",
+        "deep-fried tofu",
+        "aburaage"
+      ],
+      "group": "soy",
+      "emoji": "🌱",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 172451,
+        "description": "Tofu, fried"
+      },
+      "serving": {
+        "label": "1 piece",
+        "grams": 13
+      }
+    },
+    {
+      "id": "edamame",
+      "name": "Edamame (cooked)",
+      "aliases": [
+        "green soybeans",
+        "soybeans in pods",
+        "mukimame"
+      ],
+      "group": "soy",
+      "emoji": "🫛",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 168411,
+        "description": "Edamame, frozen, prepared"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 155
+      }
+    },
+    {
+      "id": "soy-milk",
+      "name": "Soy milk",
+      "aliases": [
+        "soya milk",
+        "soymilk",
+        "soy drink"
+      ],
+      "group": "soy",
+      "emoji": "🥛",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 172456,
+        "description": "Soymilk, original and vanilla, with added calcium, vitamins A and D"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 243
+      }
+    },
+    {
+      "id": "soybeans",
+      "name": "Soybeans (cooked)",
+      "aliases": [
+        "soya beans",
+        "soy beans"
+      ],
+      "group": "soy",
+      "emoji": "🫘",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 174271,
+        "description": "Soybeans, mature cooked, boiled, without salt"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 172
+      }
+    },
+    {
+      "id": "miso",
+      "name": "Miso",
+      "aliases": [
+        "miso paste",
+        "soybean paste"
+      ],
+      "group": "soy",
+      "emoji": "🥣",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 172442,
+        "description": "Miso"
+      },
+      "serving": {
+        "label": "1 tbsp",
+        "grams": 17
+      }
+    },
+    {
+      "id": "natto",
+      "name": "Natto",
+      "aliases": [
+        "fermented soybeans"
+      ],
+      "group": "soy",
+      "emoji": "🌱",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 172443,
+        "description": "Natto"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 175
+      }
+    },
+    {
+      "id": "tvp",
+      "name": "Textured soy protein (dry)",
+      "aliases": [
+        "TVP",
+        "textured vegetable protein",
+        "soy mince",
+        "soya mince",
+        "soy chunks"
+      ],
+      "group": "soy",
+      "emoji": "🌱",
+      "tier": 2,
+      "source": {
+        "dataset": "FNDDS",
+        "fdcId": 2707451,
+        "description": "Textured vegetable protein, dry"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 68
+      }
+    },
+    {
+      "id": "soy-yogurt",
+      "name": "Soy yogurt",
+      "aliases": [
+        "soya yoghurt",
+        "soy yoghurt",
+        "soya yogurt",
+        "dairy-free yogurt"
+      ],
+      "group": "soy",
+      "emoji": "🥣",
+      "tier": 2,
+      "source": {
+        "dataset": "FNDDS",
+        "fdcId": 2707444,
+        "description": "Yogurt, soy"
+      },
+      "serving": {
+        "label": "1 pot (6 oz)",
+        "grams": 170
+      }
+    },
+    {
+      "id": "veggie-burger",
+      "name": "Veggie burger",
+      "aliases": [
+        "soy burger",
+        "veggie patty",
+        "vegetarian burger",
+        "plant-based burger"
+      ],
+      "group": "soy",
+      "emoji": "🍔",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 174287,
+        "description": "Veggie burgers or soyburgers, unprepared"
+      },
+      "serving": {
+        "label": "1 patty",
+        "grams": 70
+      }
+    },
+    {
+      "id": "white-rice",
+      "name": "White rice (cooked)",
+      "aliases": [
+        "rice",
+        "long-grain rice",
+        "basmati rice",
+        "jasmine rice",
+        "boiled rice"
+      ],
+      "group": "grains",
+      "emoji": "🍚",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 168878,
+        "description": "Rice, white, long-grain, regular, enriched, cooked"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 158
+      }
+    },
+    {
+      "id": "brown-rice",
+      "name": "Brown rice (cooked)",
+      "aliases": [
+        "wholegrain rice"
+      ],
+      "group": "grains",
+      "emoji": "🍚",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169704,
+        "description": "Rice, brown, long-grain, cooked (Includes foods for USDA's Food Distribution Program)"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 202
+      }
+    },
+    {
+      "id": "pasta",
+      "name": "Pasta (cooked)",
+      "aliases": [
+        "spaghetti",
+        "penne",
+        "macaroni",
+        "noodles",
+        "white pasta"
+      ],
+      "group": "grains",
+      "emoji": "🍝",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169737,
+        "description": "Pasta, cooked, enriched, without added salt"
+      },
+      "serving": {
+        "label": "1 cup spaghetti",
+        "grams": 124
+      }
+    },
+    {
+      "id": "wholewheat-pasta",
+      "name": "Wholewheat pasta (cooked)",
+      "aliases": [
+        "whole wheat pasta",
+        "wholemeal pasta",
+        "whole-grain pasta",
+        "brown pasta"
+      ],
+      "group": "grains",
+      "emoji": "🍝",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 168910,
+        "description": "Pasta, whole-wheat, cooked (Includes foods for USDA's Food Distribution Program)"
+      },
+      "serving": {
+        "label": "1 cup spaghetti",
+        "grams": 117
+      }
+    },
+    {
+      "id": "quinoa",
+      "name": "Quinoa (cooked)",
+      "aliases": [
+        "keen-wah"
+      ],
+      "group": "grains",
+      "emoji": "🌾",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 168917,
+        "description": "Quinoa, cooked"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 185
+      }
+    },
+    {
+      "id": "couscous",
+      "name": "Couscous (cooked)",
+      "aliases": [
+        "cous cous"
+      ],
+      "group": "grains",
+      "emoji": "🌾",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169700,
+        "description": "Couscous, cooked"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 157
+      }
+    },
+    {
+      "id": "bulgur",
+      "name": "Bulgur wheat (cooked)",
+      "aliases": [
+        "bulgar",
+        "bulghur",
+        "cracked wheat"
+      ],
+      "group": "grains",
+      "emoji": "🌾",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170287,
+        "description": "Bulgur, cooked"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 182
+      }
+    },
+    {
+      "id": "oats",
+      "name": "Rolled oats (dry)",
+      "aliases": [
+        "oats",
+        "porridge oats",
+        "oatmeal",
+        "old-fashioned oats",
+        "quick oats"
+      ],
+      "group": "grains",
+      "emoji": "🥣",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 173904,
+        "description": "Cereals, oats, regular and quick, not fortified, dry"
+      },
+      "serving": {
+        "label": "½ cup",
+        "grams": 40.5
+      },
+      "servingSource": "chosen"
+    },
+    {
+      "id": "white-bread",
+      "name": "White bread",
+      "aliases": [
+        "sandwich bread",
+        "sliced bread",
+        "toast"
+      ],
+      "group": "grains",
+      "emoji": "🍞",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 174924,
+        "description": "Bread, white, commercially prepared (includes soft bread crumbs)"
+      },
+      "serving": {
+        "label": "1 slice",
+        "grams": 29
+      }
+    },
+    {
+      "id": "wholemeal-bread",
+      "name": "Wholemeal bread",
+      "aliases": [
+        "whole wheat bread",
+        "brown bread",
+        "wholewheat bread",
+        "whole-grain bread"
+      ],
+      "group": "grains",
+      "emoji": "🍞",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 172688,
+        "description": "Bread, whole-wheat, commercially prepared"
+      },
+      "serving": {
+        "label": "1 slice",
+        "grams": 32
+      }
+    },
+    {
+      "id": "french-bread",
+      "name": "French bread",
+      "aliases": [
+        "baguette",
+        "sourdough",
+        "sourdough bread",
+        "vienna bread"
+      ],
+      "group": "grains",
+      "emoji": "🥖",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 172675,
+        "description": "Bread, french or vienna (includes sourdough)"
+      },
+      "serving": {
+        "label": "1 oz",
+        "grams": 28.35
+      }
+    },
+    {
+      "id": "bagel",
+      "name": "Bagel",
+      "aliases": [
+        "plain bagel"
+      ],
+      "group": "grains",
+      "emoji": "🥯",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 174899,
+        "description": "Bagels, plain, enriched, with calcium propionate (includes onion, poppy, sesame)"
+      },
+      "serving": {
+        "label": "1 medium bagel",
+        "grams": 105
+      }
+    },
+    {
+      "id": "pitta",
+      "name": "Pitta bread",
+      "aliases": [
+        "pita",
+        "pita bread",
+        "pitta"
+      ],
+      "group": "grains",
+      "emoji": "🫓",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 174915,
+        "description": "Bread, pita, white, enriched"
+      },
+      "serving": {
+        "label": "1 large pitta",
+        "grams": 60
+      }
+    },
+    {
+      "id": "flour-tortilla",
+      "name": "Flour tortilla",
+      "aliases": [
+        "wrap",
+        "tortilla wrap",
+        "burrito wrap"
+      ],
+      "group": "grains",
+      "emoji": "🌯",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 175037,
+        "description": "Tortillas, ready-to-bake or -fry, flour, refrigerated"
+      },
+      "serving": {
+        "label": "1 tortilla",
+        "grams": 48
+      }
+    },
+    {
+      "id": "corn-tortilla",
+      "name": "Corn tortilla",
+      "aliases": [
+        "taco shell",
+        "maize tortilla"
+      ],
+      "group": "grains",
+      "emoji": "🌮",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 175036,
+        "description": "Tortillas, ready-to-bake or -fry, corn"
+      },
+      "serving": {
+        "label": "1 tortilla",
+        "grams": 24
+      }
+    },
+    {
+      "id": "naan",
+      "name": "Naan bread",
+      "aliases": [
+        "naan",
+        "nan bread"
+      ],
+      "group": "grains",
+      "emoji": "🫓",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 171845,
+        "description": "Bread, naan, plain, commercially prepared, refrigerated"
+      },
+      "serving": {
+        "label": "1 piece",
+        "grams": 90
+      }
+    },
+    {
+      "id": "rye-bread",
+      "name": "Rye bread",
+      "aliases": [
+        "rye",
+        "light rye"
+      ],
+      "group": "grains",
+      "emoji": "🍞",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 172684,
+        "description": "Bread, rye"
+      },
+      "serving": {
+        "label": "1 slice",
+        "grams": 32
+      }
+    },
+    {
+      "id": "english-muffin",
+      "name": "English muffin",
+      "aliases": [
+        "muffin"
+      ],
+      "group": "grains",
+      "emoji": "🍞",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 175063,
+        "description": "English muffins, plain, enriched, without calcium propionate(includes sourdough)"
+      },
+      "serving": {
+        "label": "1 muffin",
+        "grams": 57
+      }
+    },
+    {
+      "id": "popcorn",
+      "name": "Popcorn (air-popped)",
+      "aliases": [
+        "popcorn",
+        "plain popcorn"
+      ],
+      "group": "grains",
+      "emoji": "🍿",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 167959,
+        "description": "Snacks, popcorn, air-popped"
+      },
+      "serving": {
+        "label": "1 oz",
+        "grams": 28.35
+      }
+    },
+    {
+      "id": "tortilla-chips",
+      "name": "Tortilla chips",
+      "aliases": [
+        "corn chips",
+        "nachos",
+        "tortilla crisps"
+      ],
+      "group": "grains",
+      "emoji": "🌮",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 167558,
+        "description": "Snacks, tortilla chips, plain, white corn, salted"
+      },
+      "serving": {
+        "label": "1 oz",
+        "grams": 28.35
+      }
+    },
+    {
+      "id": "pretzels",
+      "name": "Pretzels",
+      "aliases": [
+        "pretzel",
+        "hard pretzels",
+        "pretzel twists"
+      ],
+      "group": "grains",
+      "emoji": "🥨",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 167555,
+        "description": "Snacks, pretzels, hard, plain, salted"
+      },
+      "serving": {
+        "label": "1 oz",
+        "grams": 28.35
+      }
+    },
+    {
+      "id": "cornflakes",
+      "name": "Cornflakes",
+      "aliases": [
+        "corn flakes"
+      ],
+      "group": "grains",
+      "emoji": "🥣",
+      "tier": 1,
+      "source": {
+        "dataset": "FNDDS",
+        "fdcId": 2708453,
+        "description": "Cereal, corn flakes, plain"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 30
+      }
+    },
+    {
+      "id": "granola",
+      "name": "Granola",
+      "aliases": [
+        "crunchy granola"
+      ],
+      "group": "grains",
+      "emoji": "🥣",
+      "tier": 1,
+      "source": {
+        "dataset": "FNDDS",
+        "fdcId": 2708461,
+        "description": "Cereal, granola"
+      },
+      "serving": {
+        "label": "1 serving",
+        "grams": 30
+      }
+    },
+    {
+      "id": "barley",
+      "name": "Pearl barley (cooked)",
+      "aliases": [
+        "barley",
+        "pearled barley"
+      ],
+      "group": "grains",
+      "emoji": "🌾",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170285,
+        "description": "Barley, pearled, cooked"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 157
+      }
+    },
+    {
+      "id": "buckwheat",
+      "name": "Buckwheat (cooked)",
+      "aliases": [
+        "kasha",
+        "buckwheat groats"
+      ],
+      "group": "grains",
+      "emoji": "🌾",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170686,
+        "description": "Buckwheat groats, roasted, cooked"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 168
+      }
+    },
+    {
+      "id": "wild-rice",
+      "name": "Wild rice (cooked)",
+      "aliases": [],
+      "group": "grains",
+      "emoji": "🍚",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 168897,
+        "description": "Wild rice, cooked"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 164
+      }
+    },
+    {
+      "id": "spelt",
+      "name": "Spelt (cooked)",
+      "aliases": [
+        "spelt grains",
+        "dinkel"
+      ],
+      "group": "grains",
+      "emoji": "🌾",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169746,
+        "description": "Spelt, cooked"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 194
+      }
+    },
+    {
+      "id": "rice-noodles",
+      "name": "Rice noodles (cooked)",
+      "aliases": [
+        "rice vermicelli",
+        "pad thai noodles",
+        "flat rice noodles"
+      ],
+      "group": "grains",
+      "emoji": "🍜",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 168914,
+        "description": "Rice noodles, cooked"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 176
+      }
+    },
+    {
+      "id": "oat-milk",
+      "name": "Oat milk",
+      "aliases": [
+        "oat drink"
+      ],
+      "group": "grains",
+      "emoji": "🥛",
+      "tier": 1,
+      "source": {
+        "dataset": "FNDDS",
+        "fdcId": 2705412,
+        "description": "Oat milk"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 244
+      }
+    },
+    {
+      "id": "rice-cakes",
+      "name": "Rice cakes",
+      "aliases": [
+        "puffed rice cakes",
+        "rice crackers"
+      ],
+      "group": "grains",
+      "emoji": "🍘",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170250,
+        "description": "Snacks, rice cakes, brown rice, plain, unsalted"
+      },
+      "serving": {
+        "label": "2 cakes",
+        "grams": 18
+      }
+    },
+    {
+      "id": "almonds",
+      "name": "Almonds",
+      "aliases": [
+        "almond",
+        "raw almonds"
+      ],
+      "group": "nuts",
+      "emoji": "🌰",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170567,
+        "description": "Nuts, almonds"
+      },
+      "serving": {
+        "label": "1 oz (23 almonds)",
+        "grams": 28.35
+      }
+    },
+    {
+      "id": "peanuts",
+      "name": "Peanuts (roasted)",
+      "aliases": [
+        "peanut",
+        "groundnuts",
+        "monkey nuts",
+        "dry roasted peanuts"
+      ],
+      "group": "nuts",
+      "emoji": "🥜",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 173806,
+        "description": "Peanuts, all types, dry-roasted, without salt"
+      },
+      "serving": {
+        "label": "1 oz",
+        "grams": 28.35
+      }
+    },
+    {
+      "id": "peanut-butter",
+      "name": "Peanut butter",
+      "aliases": [
+        "peanut paste",
+        "smooth peanut butter"
+      ],
+      "group": "nuts",
+      "emoji": "🥜",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 174266,
+        "description": "Peanut butter, smooth style, with salt (Includes foods for USDA's Food Distribution Program)"
+      },
+      "serving": {
+        "label": "2 tbsp",
+        "grams": 32
+      }
+    },
+    {
+      "id": "cashews",
+      "name": "Cashews (roasted)",
+      "aliases": [
+        "cashew nuts",
+        "cashew"
+      ],
+      "group": "nuts",
+      "emoji": "🌰",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170571,
+        "description": "Nuts, cashew nuts, dry roasted, without salt added"
+      },
+      "serving": {
+        "label": "1 oz",
+        "grams": 28.35
+      }
+    },
+    {
+      "id": "walnuts",
+      "name": "Walnuts",
+      "aliases": [
+        "walnut",
+        "english walnuts"
+      ],
+      "group": "nuts",
+      "emoji": "🌰",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170187,
+        "description": "Nuts, walnuts, english"
+      },
+      "serving": {
+        "label": "1 oz (14 halves)",
+        "grams": 28.35
+      }
+    },
+    {
+      "id": "pistachios",
+      "name": "Pistachios",
+      "aliases": [
+        "pistachio nuts",
+        "pistachio"
+      ],
+      "group": "nuts",
+      "emoji": "🌰",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170185,
+        "description": "Nuts, pistachio nuts, dry roasted, without salt added"
+      },
+      "serving": {
+        "label": "1 oz (49 kernels)",
+        "grams": 28.35
+      }
+    },
+    {
+      "id": "hazelnuts",
+      "name": "Hazelnuts",
+      "aliases": [
+        "filberts",
+        "cobnuts",
+        "hazelnut"
+      ],
+      "group": "nuts",
+      "emoji": "🌰",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170581,
+        "description": "Nuts, hazelnuts or filberts"
+      },
+      "serving": {
+        "label": "1 oz (21 nuts)",
+        "grams": 28.35
+      }
+    },
+    {
+      "id": "pecans",
+      "name": "Pecans",
+      "aliases": [
+        "pecan nuts",
+        "pecan"
+      ],
+      "group": "nuts",
+      "emoji": "🌰",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170182,
+        "description": "Nuts, pecans"
+      },
+      "serving": {
+        "label": "1 oz (19 halves)",
+        "grams": 28.35
+      }
+    },
+    {
+      "id": "brazil-nuts",
+      "name": "Brazil nuts",
+      "aliases": [
+        "brazil nut",
+        "brazils"
+      ],
+      "group": "nuts",
+      "emoji": "🌰",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170569,
+        "description": "Nuts, brazilnuts, dried, unblanched"
+      },
+      "serving": {
+        "label": "1 oz (6 nuts)",
+        "grams": 28.35
+      }
+    },
+    {
+      "id": "macadamias",
+      "name": "Macadamia nuts",
+      "aliases": [
+        "macadamias",
+        "macadamia"
+      ],
+      "group": "nuts",
+      "emoji": "🌰",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170178,
+        "description": "Nuts, macadamia nuts, raw"
+      },
+      "serving": {
+        "label": "1 oz (10-12 nuts)",
+        "grams": 28.35
+      }
+    },
+    {
+      "id": "pine-nuts",
+      "name": "Pine nuts",
+      "aliases": [
+        "pignoli",
+        "pinon nuts"
+      ],
+      "group": "nuts",
+      "emoji": "🌰",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170591,
+        "description": "Nuts, pine nuts, dried"
+      },
+      "serving": {
+        "label": "1 oz",
+        "grams": 28.35
+      }
+    },
+    {
+      "id": "chestnuts",
+      "name": "Chestnuts (roasted)",
+      "aliases": [
+        "chestnut",
+        "roast chestnuts"
+      ],
+      "group": "nuts",
+      "emoji": "🌰",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170190,
+        "description": "Nuts, chestnuts, european, roasted"
+      },
+      "serving": {
+        "label": "10 chestnuts",
+        "grams": 84
+      }
+    },
+    {
+      "id": "coconut",
+      "name": "Coconut (fresh)",
+      "aliases": [
+        "coconut meat",
+        "coconut flesh"
+      ],
+      "group": "nuts",
+      "emoji": "🥥",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170169,
+        "description": "Nuts, coconut meat, raw"
+      },
+      "serving": {
+        "label": "1 piece (2\" x 2\" x ½\")",
+        "grams": 45
+      }
+    },
+    {
+      "id": "sunflower-seeds",
+      "name": "Sunflower seeds",
+      "aliases": [
+        "sunflower kernels",
+        "sunflower seed"
+      ],
+      "group": "nuts",
+      "emoji": "🌻",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170563,
+        "description": "Seeds, sunflower seed kernels, dry roasted, without salt"
+      },
+      "serving": {
+        "label": "1 oz",
+        "grams": 28.35
+      }
+    },
+    {
+      "id": "pumpkin-seeds",
+      "name": "Pumpkin seeds",
+      "aliases": [
+        "pepitas",
+        "pumpkin seed kernels"
+      ],
+      "group": "nuts",
+      "emoji": "🎃",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170556,
+        "description": "Seeds, pumpkin and squash seed kernels, dried"
+      },
+      "serving": {
+        "label": "1 oz",
+        "grams": 28.35
+      }
+    },
+    {
+      "id": "chia-seeds",
+      "name": "Chia seeds",
+      "aliases": [
+        "chia"
+      ],
+      "group": "nuts",
+      "emoji": "🌱",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170554,
+        "description": "Seeds, chia seeds, dried"
+      },
+      "serving": {
+        "label": "1 oz",
+        "grams": 28.35
+      }
+    },
+    {
+      "id": "flaxseed",
+      "name": "Flaxseed",
+      "aliases": [
+        "linseed",
+        "flax seeds",
+        "ground flax",
+        "flax"
+      ],
+      "group": "nuts",
+      "emoji": "🌱",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169414,
+        "description": "Seeds, flaxseed"
+      },
+      "serving": {
+        "label": "1 tbsp ground",
+        "grams": 7
+      }
+    },
+    {
+      "id": "sesame-seeds",
+      "name": "Sesame seeds",
+      "aliases": [
+        "sesame",
+        "benne seeds"
+      ],
+      "group": "nuts",
+      "emoji": "🌱",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170150,
+        "description": "Seeds, sesame seeds, whole, dried"
+      },
+      "serving": {
+        "label": "1 tbsp",
+        "grams": 9
+      }
+    },
+    {
+      "id": "tahini",
+      "name": "Tahini",
+      "aliases": [
+        "tahina",
+        "sesame paste",
+        "sesame butter"
+      ],
+      "group": "nuts",
+      "emoji": "🥄",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170189,
+        "description": "Seeds, sesame butter, tahini, from roasted and toasted kernels (most common type)"
+      },
+      "serving": {
+        "label": "1 tbsp",
+        "grams": 15
+      }
+    },
+    {
+      "id": "hemp-seeds",
+      "name": "Hemp seeds",
+      "aliases": [
+        "hemp hearts",
+        "hulled hemp seeds"
+      ],
+      "group": "nuts",
+      "emoji": "🌱",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170148,
+        "description": "Seeds, hemp seed, hulled"
+      },
+      "serving": {
+        "label": "3 tbsp",
+        "grams": 30
+      }
+    },
+    {
+      "id": "almond-butter",
+      "name": "Almond butter",
+      "aliases": [
+        "almond spread"
+      ],
+      "group": "nuts",
+      "emoji": "🥄",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 168588,
+        "description": "Nuts, almond butter, plain, without salt added"
+      },
+      "serving": {
+        "label": "1 tbsp",
+        "grams": 16
+      }
+    },
+    {
+      "id": "almond-milk",
+      "name": "Almond milk",
+      "aliases": [
+        "almond drink",
+        "unsweetened almond milk"
+      ],
+      "group": "nuts",
+      "emoji": "🥛",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 174832,
+        "description": "Beverages, almond milk, unsweetened, shelf stable"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 262
+      }
+    },
+    {
+      "id": "mixed-nuts",
+      "name": "Mixed nuts",
+      "aliases": [
+        "nut mix",
+        "roasted mixed nuts"
+      ],
+      "group": "nuts",
+      "emoji": "🌰",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170585,
+        "description": "Nuts, mixed nuts, dry roasted, with peanuts, without salt added"
+      },
+      "serving": {
+        "label": "1 oz",
+        "grams": 28.35
+      }
+    },
+    {
+      "id": "cashew-butter",
+      "name": "Cashew butter",
+      "aliases": [
+        "cashew spread"
+      ],
+      "group": "nuts",
+      "emoji": "🥄",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170163,
+        "description": "Nuts, cashew butter, plain, without salt added"
+      },
+      "serving": {
+        "label": "1 tbsp",
+        "grams": 16
+      }
+    },
+    {
+      "id": "sunflower-butter",
+      "name": "Sunflower seed butter",
+      "aliases": [
+        "sunbutter",
+        "sunflower butter"
+      ],
+      "group": "nuts",
+      "emoji": "🥄",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170155,
+        "description": "Seeds, sunflower seed butter, without salt"
+      },
+      "serving": {
+        "label": "1 tbsp",
+        "grams": 16
+      }
+    },
+    {
+      "id": "potato",
+      "name": "Potato (baked)",
+      "aliases": [
+        "jacket potato",
+        "baked potato",
+        "potatoes",
+        "spud"
+      ],
+      "group": "veg",
+      "emoji": "🥔",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170093,
+        "description": "Potatoes, baked, flesh and skin, without salt"
+      },
+      "serving": {
+        "label": "1 medium potato",
+        "grams": 173
+      }
+    },
+    {
+      "id": "sweet-potato",
+      "name": "Sweet potato (baked)",
+      "aliases": [
+        "yam",
+        "sweet potatoes",
+        "kumara"
+      ],
+      "group": "veg",
+      "emoji": "🍠",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 168483,
+        "description": "Sweet potato, cooked, baked in skin, flesh, without salt"
+      },
+      "serving": {
+        "label": "1 large sweet potato",
+        "grams": 180
+      }
+    },
+    {
+      "id": "fries",
+      "name": "Fries (oven-baked)",
+      "aliases": [
+        "chips",
+        "french fries",
+        "oven chips",
+        "frites"
+      ],
+      "group": "veg",
+      "emoji": "🍟",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170118,
+        "description": "Potatoes, french fried, all types, salt not added in processing, frozen, oven-heated"
+      },
+      "serving": {
+        "label": "10 fries",
+        "grams": 74
+      }
+    },
+    {
+      "id": "crisps",
+      "name": "Potato crisps",
+      "aliases": [
+        "crisps",
+        "potato chips"
+      ],
+      "group": "veg",
+      "emoji": "🥔",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169677,
+        "description": "Snacks, potato chips, plain, salted"
+      },
+      "serving": {
+        "label": "1 oz (about 22 crisps)",
+        "grams": 28
+      }
+    },
+    {
+      "id": "broccoli",
+      "name": "Broccoli",
+      "aliases": [
+        "calabrese"
+      ],
+      "group": "veg",
+      "emoji": "🥦",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169967,
+        "description": "Broccoli, cooked, boiled, drained, without salt"
+      },
+      "serving": {
+        "label": "½ cup chopped",
+        "grams": 78
+      }
+    },
+    {
+      "id": "spinach",
+      "name": "Spinach",
+      "aliases": [
+        "baby spinach",
+        "english spinach"
+      ],
+      "group": "veg",
+      "emoji": "🥬",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 168462,
+        "description": "Spinach, raw"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 30
+      }
+    },
+    {
+      "id": "kale",
+      "name": "Kale",
+      "aliases": [
+        "curly kale",
+        "cavolo nero",
+        "borecole"
+      ],
+      "group": "veg",
+      "emoji": "🥬",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 168421,
+        "description": "Kale, raw"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 21
+      }
+    },
+    {
+      "id": "carrot",
+      "name": "Carrot",
+      "aliases": [
+        "carrots"
+      ],
+      "group": "veg",
+      "emoji": "🥕",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170393,
+        "description": "Carrots, raw"
+      },
+      "serving": {
+        "label": "1 medium carrot",
+        "grams": 61
+      }
+    },
+    {
+      "id": "tomato",
+      "name": "Tomato",
+      "aliases": [
+        "tomatoes",
+        "cherry tomatoes"
+      ],
+      "group": "veg",
+      "emoji": "🍅",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170457,
+        "description": "Tomatoes, red, ripe, raw, year round average"
+      },
+      "serving": {
+        "label": "1 medium tomato",
+        "grams": 123
+      }
+    },
+    {
+      "id": "cucumber",
+      "name": "Cucumber",
+      "aliases": [
+        "cucumbers",
+        "cuke"
+      ],
+      "group": "veg",
+      "emoji": "🥒",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 168409,
+        "description": "Cucumber, with peel, raw"
+      },
+      "serving": {
+        "label": "½ cup slices",
+        "grams": 52
+      }
+    },
+    {
+      "id": "lettuce",
+      "name": "Iceberg lettuce",
+      "aliases": [
+        "lettuce",
+        "iceberg",
+        "crisphead lettuce"
+      ],
+      "group": "veg",
+      "emoji": "🥬",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169248,
+        "description": "Lettuce, iceberg (includes crisphead types), raw"
+      },
+      "serving": {
+        "label": "1 cup chopped",
+        "grams": 57
+      }
+    },
+    {
+      "id": "romaine",
+      "name": "Romaine lettuce",
+      "aliases": [
+        "cos lettuce",
+        "romaine",
+        "little gem"
+      ],
+      "group": "veg",
+      "emoji": "🥬",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169247,
+        "description": "Lettuce, cos or romaine, raw"
+      },
+      "serving": {
+        "label": "1 cup shredded",
+        "grams": 47
+      }
+    },
+    {
+      "id": "onion",
+      "name": "Onion",
+      "aliases": [
+        "onions",
+        "brown onion",
+        "yellow onion"
+      ],
+      "group": "veg",
+      "emoji": "🧅",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170000,
+        "description": "Onions, raw"
+      },
+      "serving": {
+        "label": "1 medium onion",
+        "grams": 110
+      }
+    },
+    {
+      "id": "garlic",
+      "name": "Garlic",
+      "aliases": [
+        "garlic cloves"
+      ],
+      "group": "veg",
+      "emoji": "🧄",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169230,
+        "description": "Garlic, raw"
+      },
+      "serving": {
+        "label": "3 cloves",
+        "grams": 9
+      }
+    },
+    {
+      "id": "red-pepper",
+      "name": "Red pepper",
+      "aliases": [
+        "bell pepper",
+        "capsicum",
+        "sweet pepper",
+        "red bell pepper"
+      ],
+      "group": "veg",
+      "emoji": "🫑",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170108,
+        "description": "Peppers, sweet, red, raw"
+      },
+      "serving": {
+        "label": "1 cup chopped",
+        "grams": 149
+      }
+    },
+    {
+      "id": "green-beans",
+      "name": "Green beans",
+      "aliases": [
+        "string beans",
+        "french beans",
+        "snap beans"
+      ],
+      "group": "veg",
+      "emoji": "🫛",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169141,
+        "description": "Beans, snap, green, cooked, boiled, drained, without salt"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 125
+      }
+    },
+    {
+      "id": "cauliflower",
+      "name": "Cauliflower",
+      "aliases": [],
+      "group": "veg",
+      "emoji": "🥦",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170397,
+        "description": "Cauliflower, cooked, boiled, drained, without salt"
+      },
+      "serving": {
+        "label": "½ cup",
+        "grams": 62
+      }
+    },
+    {
+      "id": "cabbage",
+      "name": "Cabbage",
+      "aliases": [
+        "white cabbage",
+        "green cabbage"
+      ],
+      "group": "veg",
+      "emoji": "🥬",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169975,
+        "description": "Cabbage, raw"
+      },
+      "serving": {
+        "label": "1 cup shredded",
+        "grams": 70
+      }
+    },
+    {
+      "id": "brussels-sprouts",
+      "name": "Brussels sprouts",
+      "aliases": [
+        "sprouts",
+        "brussel sprouts"
+      ],
+      "group": "veg",
+      "emoji": "🥬",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169971,
+        "description": "Brussels sprouts, cooked, boiled, drained, without salt"
+      },
+      "serving": {
+        "label": "½ cup",
+        "grams": 78
+      }
+    },
+    {
+      "id": "asparagus",
+      "name": "Asparagus",
+      "aliases": [
+        "asparagus spears"
+      ],
+      "group": "veg",
+      "emoji": "🌱",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 168390,
+        "description": "Asparagus, cooked, boiled, drained"
+      },
+      "serving": {
+        "label": "4 spears",
+        "grams": 60
+      }
+    },
+    {
+      "id": "mushrooms",
+      "name": "Mushrooms",
+      "aliases": [
+        "button mushrooms",
+        "white mushrooms",
+        "mushroom",
+        "champignons"
+      ],
+      "group": "veg",
+      "emoji": "🍄",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169251,
+        "description": "Mushrooms, white, raw"
+      },
+      "serving": {
+        "label": "1 cup sliced",
+        "grams": 70
+      }
+    },
+    {
+      "id": "sweetcorn",
+      "name": "Sweetcorn",
+      "aliases": [
+        "corn",
+        "sweet corn",
+        "corn on the cob",
+        "maize"
+      ],
+      "group": "veg",
+      "emoji": "🌽",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169999,
+        "description": "Corn, sweet, yellow, cooked, boiled, drained, without salt"
+      },
+      "serving": {
+        "label": "1 medium cob",
+        "grams": 103
+      }
+    },
+    {
+      "id": "courgette",
+      "name": "Courgette",
+      "aliases": [
+        "zucchini",
+        "summer squash"
+      ],
+      "group": "veg",
+      "emoji": "🥒",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169291,
+        "description": "Squash, summer, zucchini, includes skin, raw"
+      },
+      "serving": {
+        "label": "1 medium courgette",
+        "grams": 196
+      }
+    },
+    {
+      "id": "aubergine",
+      "name": "Aubergine",
+      "aliases": [
+        "eggplant",
+        "brinjal"
+      ],
+      "group": "veg",
+      "emoji": "🍆",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169229,
+        "description": "Eggplant, cooked, boiled, drained, without salt"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 99
+      }
+    },
+    {
+      "id": "celery",
+      "name": "Celery",
+      "aliases": [
+        "celery sticks"
+      ],
+      "group": "veg",
+      "emoji": "🥬",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169988,
+        "description": "Celery, raw"
+      },
+      "serving": {
+        "label": "1 medium stalk",
+        "grams": 40
+      }
+    },
+    {
+      "id": "beetroot",
+      "name": "Beetroot",
+      "aliases": [
+        "beets",
+        "beet"
+      ],
+      "group": "veg",
+      "emoji": "🥬",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169146,
+        "description": "Beets, cooked, boiled, drained"
+      },
+      "serving": {
+        "label": "2 beets",
+        "grams": 100
+      }
+    },
+    {
+      "id": "butternut-squash",
+      "name": "Butternut squash",
+      "aliases": [
+        "butternut",
+        "squash",
+        "winter squash"
+      ],
+      "group": "veg",
+      "emoji": "🎃",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169296,
+        "description": "Squash, winter, butternut, cooked, baked, without salt"
+      },
+      "serving": {
+        "label": "1 cup cubed",
+        "grams": 205
+      }
+    },
+    {
+      "id": "parsnip",
+      "name": "Parsnip",
+      "aliases": [
+        "parsnips"
+      ],
+      "group": "veg",
+      "emoji": "🥕",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170009,
+        "description": "Parsnips, cooked, boiled, drained, without salt"
+      },
+      "serving": {
+        "label": "½ cup slices",
+        "grams": 78
+      }
+    },
+    {
+      "id": "leek",
+      "name": "Leek",
+      "aliases": [
+        "leeks"
+      ],
+      "group": "veg",
+      "emoji": "🥬",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 168426,
+        "description": "Leeks, (bulb and lower leaf-portion), cooked, boiled, drained, without salt"
+      },
+      "serving": {
+        "label": "1 leek",
+        "grams": 124
+      }
+    },
+    {
+      "id": "radish",
+      "name": "Radish",
+      "aliases": [
+        "radishes"
+      ],
+      "group": "veg",
+      "emoji": "🥬",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169276,
+        "description": "Radishes, raw"
+      },
+      "serving": {
+        "label": "½ cup slices",
+        "grams": 58
+      }
+    },
+    {
+      "id": "snow-peas",
+      "name": "Mangetout",
+      "aliases": [
+        "snow peas",
+        "sugar snap peas",
+        "snap peas",
+        "edible-podded peas"
+      ],
+      "group": "veg",
+      "emoji": "🫛",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170010,
+        "description": "Peas, edible-podded, raw"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 63
+      }
+    },
+    {
+      "id": "bean-sprouts",
+      "name": "Bean sprouts",
+      "aliases": [
+        "mung bean sprouts",
+        "beansprouts"
+      ],
+      "group": "veg",
+      "emoji": "🌱",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169957,
+        "description": "Mung beans, mature seeds, sprouted, raw"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 104
+      }
+    },
+    {
+      "id": "artichoke",
+      "name": "Artichoke",
+      "aliases": [
+        "globe artichoke",
+        "artichoke hearts"
+      ],
+      "group": "veg",
+      "emoji": "🥬",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 168386,
+        "description": "Artichokes, (globe or french), cooked, boiled, drained, without salt"
+      },
+      "serving": {
+        "label": "1 medium artichoke",
+        "grams": 120
+      }
+    },
+    {
+      "id": "okra",
+      "name": "Okra",
+      "aliases": [
+        "ladies' fingers",
+        "bhindi"
+      ],
+      "group": "veg",
+      "emoji": "🥬",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169261,
+        "description": "Okra, cooked, boiled, drained, without salt"
+      },
+      "serving": {
+        "label": "½ cup slices",
+        "grams": 80
+      }
+    },
+    {
+      "id": "pak-choi",
+      "name": "Pak choi",
+      "aliases": [
+        "bok choy",
+        "bok choi"
+      ],
+      "group": "veg",
+      "emoji": "🥬",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170390,
+        "description": "Cabbage, chinese (pak-choi), raw"
+      },
+      "serving": {
+        "label": "1 cup shredded",
+        "grams": 70
+      }
+    },
+    {
+      "id": "rocket",
+      "name": "Rocket",
+      "aliases": [
+        "arugula",
+        "roquette"
+      ],
+      "group": "veg",
+      "emoji": "🥬",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169387,
+        "description": "Arugula, raw"
+      },
+      "serving": {
+        "label": "½ cup",
+        "grams": 10
+      }
+    },
+    {
+      "id": "olives",
+      "name": "Black olives",
+      "aliases": [
+        "olives",
+        "ripe olives"
+      ],
+      "group": "veg",
+      "emoji": "🫒",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169094,
+        "description": "Olives, ripe, canned (small-extra large)"
+      },
+      "serving": {
+        "label": "5 large olives",
+        "grams": 22
+      },
+      "servingSource": "chosen"
+    },
+    {
+      "id": "kimchi",
+      "name": "Kimchi",
+      "aliases": [
+        "kimchee"
+      ],
+      "group": "veg",
+      "emoji": "🥬",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170392,
+        "description": "Cabbage, kimchi"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 150
+      }
+    },
+    {
+      "id": "swede",
+      "name": "Swede (cooked)",
+      "aliases": [
+        "rutabaga",
+        "neeps",
+        "yellow turnip"
+      ],
+      "group": "veg",
+      "emoji": "🥬",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 168455,
+        "description": "Rutabagas, cooked, boiled, drained, without salt"
+      },
+      "serving": {
+        "label": "1 cup cubed",
+        "grams": 170
+      }
+    },
+    {
+      "id": "spring-onion",
+      "name": "Spring onions",
+      "aliases": [
+        "scallions",
+        "green onions",
+        "salad onions"
+      ],
+      "group": "veg",
+      "emoji": "🧅",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170005,
+        "description": "Onions, spring or scallions (includes tops and bulb), raw"
+      },
+      "serving": {
+        "label": "1 medium",
+        "grams": 15
+      }
+    },
+    {
+      "id": "spirulina",
+      "name": "Spirulina (dried)",
+      "aliases": [
+        "spirulina powder",
+        "blue-green algae"
+      ],
+      "group": "veg",
+      "emoji": "🌿",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170495,
+        "description": "Seaweed, spirulina, dried"
+      },
+      "serving": {
+        "label": "1 tbsp",
+        "grams": 7
+      }
+    },
+    {
+      "id": "apple",
+      "name": "Apple",
+      "aliases": [
+        "apples"
+      ],
+      "group": "fruit",
+      "emoji": "🍎",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 171688,
+        "description": "Apples, raw, with skin (Includes foods for USDA's Food Distribution Program)"
+      },
+      "serving": {
+        "label": "1 medium apple",
+        "grams": 182
+      }
+    },
+    {
+      "id": "banana",
+      "name": "Banana",
+      "aliases": [
+        "bananas"
+      ],
+      "group": "fruit",
+      "emoji": "🍌",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 173944,
+        "description": "Bananas, raw"
+      },
+      "serving": {
+        "label": "1 medium banana",
+        "grams": 118
+      }
+    },
+    {
+      "id": "orange",
+      "name": "Orange",
+      "aliases": [
+        "oranges",
+        "navel orange"
+      ],
+      "group": "fruit",
+      "emoji": "🍊",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169097,
+        "description": "Oranges, raw, all commercial varieties"
+      },
+      "serving": {
+        "label": "1 orange",
+        "grams": 131
+      }
+    },
+    {
+      "id": "strawberries",
+      "name": "Strawberries",
+      "aliases": [
+        "strawberry"
+      ],
+      "group": "fruit",
+      "emoji": "🍓",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 167762,
+        "description": "Strawberries, raw"
+      },
+      "serving": {
+        "label": "1 cup sliced",
+        "grams": 166
+      }
+    },
+    {
+      "id": "blueberries",
+      "name": "Blueberries",
+      "aliases": [
+        "blueberry"
+      ],
+      "group": "fruit",
+      "emoji": "🫐",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 171711,
+        "description": "Blueberries, raw"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 148
+      }
+    },
+    {
+      "id": "grapes",
+      "name": "Grapes",
+      "aliases": [
+        "grape",
+        "green grapes",
+        "red grapes"
+      ],
+      "group": "fruit",
+      "emoji": "🍇",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 174683,
+        "description": "Grapes, red or green (European type, such as Thompson seedless), raw"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 151
+      }
+    },
+    {
+      "id": "raspberries",
+      "name": "Raspberries",
+      "aliases": [
+        "raspberry"
+      ],
+      "group": "fruit",
+      "emoji": "🍓",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 167755,
+        "description": "Raspberries, raw"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 123
+      }
+    },
+    {
+      "id": "blackberries",
+      "name": "Blackberries",
+      "aliases": [
+        "blackberry",
+        "brambles"
+      ],
+      "group": "fruit",
+      "emoji": "🫐",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 173946,
+        "description": "Blackberries, raw"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 144
+      }
+    },
+    {
+      "id": "pear",
+      "name": "Pear",
+      "aliases": [
+        "pears"
+      ],
+      "group": "fruit",
+      "emoji": "🍐",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169118,
+        "description": "Pears, raw"
+      },
+      "serving": {
+        "label": "1 medium pear",
+        "grams": 178
+      }
+    },
+    {
+      "id": "peach",
+      "name": "Peach",
+      "aliases": [
+        "peaches"
+      ],
+      "group": "fruit",
+      "emoji": "🍑",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169928,
+        "description": "Peaches, yellow, raw"
+      },
+      "serving": {
+        "label": "1 medium peach",
+        "grams": 150
+      }
+    },
+    {
+      "id": "mango",
+      "name": "Mango",
+      "aliases": [
+        "mangoes",
+        "mangos"
+      ],
+      "group": "fruit",
+      "emoji": "🥭",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169910,
+        "description": "Mangos, raw"
+      },
+      "serving": {
+        "label": "1 cup pieces",
+        "grams": 165
+      }
+    },
+    {
+      "id": "pineapple",
+      "name": "Pineapple",
+      "aliases": [
+        "pineapples"
+      ],
+      "group": "fruit",
+      "emoji": "🍍",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169124,
+        "description": "Pineapple, raw, all varieties"
+      },
+      "serving": {
+        "label": "1 cup chunks",
+        "grams": 165
+      }
+    },
+    {
+      "id": "watermelon",
+      "name": "Watermelon",
+      "aliases": [
+        "water melon"
+      ],
+      "group": "fruit",
+      "emoji": "🍉",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 167765,
+        "description": "Watermelon, raw"
+      },
+      "serving": {
+        "label": "1 cup diced",
+        "grams": 152
+      }
+    },
+    {
+      "id": "kiwi",
+      "name": "Kiwi fruit",
+      "aliases": [
+        "kiwi",
+        "kiwifruit",
+        "chinese gooseberry"
+      ],
+      "group": "fruit",
+      "emoji": "🥝",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 168153,
+        "description": "Kiwifruit, green, raw"
+      },
+      "serving": {
+        "label": "1 kiwi",
+        "grams": 69
+      }
+    },
+    {
+      "id": "cherries",
+      "name": "Cherries",
+      "aliases": [
+        "cherry",
+        "sweet cherries"
+      ],
+      "group": "fruit",
+      "emoji": "🍒",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 171719,
+        "description": "Cherries, sweet, raw"
+      },
+      "serving": {
+        "label": "1 cup pitted",
+        "grams": 154
+      }
+    },
+    {
+      "id": "avocado",
+      "name": "Avocado",
+      "aliases": [
+        "avocados",
+        "avo",
+        "hass avocado"
+      ],
+      "group": "fruit",
+      "emoji": "🥑",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 171705,
+        "description": "Avocados, raw, all commercial varieties"
+      },
+      "serving": {
+        "label": "1 cup sliced",
+        "grams": 146
+      }
+    },
+    {
+      "id": "grapefruit",
+      "name": "Grapefruit",
+      "aliases": [
+        "pink grapefruit"
+      ],
+      "group": "fruit",
+      "emoji": "🍊",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 173033,
+        "description": "Grapefruit, raw, pink and red and white, all areas"
+      },
+      "serving": {
+        "label": "½ medium grapefruit",
+        "grams": 128
+      }
+    },
+    {
+      "id": "plum",
+      "name": "Plum",
+      "aliases": [
+        "plums"
+      ],
+      "group": "fruit",
+      "emoji": "🍑",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169949,
+        "description": "Plums, raw"
+      },
+      "serving": {
+        "label": "1 plum",
+        "grams": 66
+      }
+    },
+    {
+      "id": "mandarin",
+      "name": "Mandarin",
+      "aliases": [
+        "tangerine",
+        "clementine",
+        "satsuma",
+        "mandarin orange"
+      ],
+      "group": "fruit",
+      "emoji": "🍊",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169105,
+        "description": "Tangerines, (mandarin oranges), raw"
+      },
+      "serving": {
+        "label": "1 medium mandarin",
+        "grams": 88
+      }
+    },
+    {
+      "id": "melon",
+      "name": "Cantaloupe melon",
+      "aliases": [
+        "cantaloupe",
+        "rockmelon",
+        "melon",
+        "muskmelon"
+      ],
+      "group": "fruit",
+      "emoji": "🍈",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169092,
+        "description": "Melons, cantaloupe, raw"
+      },
+      "serving": {
+        "label": "1 cup cubed",
+        "grams": 160
+      }
+    },
+    {
+      "id": "raisins",
+      "name": "Raisins",
+      "aliases": [
+        "sultanas",
+        "dried grapes"
+      ],
+      "group": "fruit",
+      "emoji": "🍇",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 168165,
+        "description": "Raisins, dark, seedless (Includes foods for USDA's Food Distribution Program)"
+      },
+      "serving": {
+        "label": "1 small box (1.5 oz)",
+        "grams": 43
+      }
+    },
+    {
+      "id": "dates",
+      "name": "Dates (medjool)",
+      "aliases": [
+        "medjool dates",
+        "date"
+      ],
+      "group": "fruit",
+      "emoji": "🌴",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 168191,
+        "description": "Dates, medjool"
+      },
+      "serving": {
+        "label": "1 date",
+        "grams": 24
+      }
+    },
+    {
+      "id": "dried-apricots",
+      "name": "Dried apricots",
+      "aliases": [
+        "apricots",
+        "dried apricot"
+      ],
+      "group": "fruit",
+      "emoji": "🍑",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 173941,
+        "description": "Apricots, dried, sulfured, uncooked"
+      },
+      "serving": {
+        "label": "8 halves",
+        "grams": 28
+      },
+      "servingSource": "chosen"
+    },
+    {
+      "id": "prunes",
+      "name": "Prunes",
+      "aliases": [
+        "dried plums",
+        "prune"
+      ],
+      "group": "fruit",
+      "emoji": "🍑",
+      "tier": 1,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 168162,
+        "description": "Plums, dried (prunes), uncooked"
+      },
+      "serving": {
+        "label": "4 prunes",
+        "grams": 38
+      },
+      "servingSource": "chosen"
+    },
+    {
+      "id": "pomegranate",
+      "name": "Pomegranate",
+      "aliases": [
+        "pomegranate seeds",
+        "pomegranate arils"
+      ],
+      "group": "fruit",
+      "emoji": "🍎",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 169134,
+        "description": "Pomegranates, raw"
+      },
+      "serving": {
+        "label": "½ cup seeds",
+        "grams": 87
+      }
+    },
+    {
+      "id": "guava",
+      "name": "Guava",
+      "aliases": [
+        "guavas",
+        "common guava"
+      ],
+      "group": "fruit",
+      "emoji": "🍐",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 173044,
+        "description": "Guavas, common, raw"
+      },
+      "serving": {
+        "label": "1 guava",
+        "grams": 55
+      }
+    },
+    {
+      "id": "jackfruit",
+      "name": "Jackfruit",
+      "aliases": [
+        "jack fruit"
+      ],
+      "group": "fruit",
+      "emoji": "🍈",
+      "tier": 2,
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 174687,
+        "description": "Jackfruit, raw"
+      },
+      "serving": {
+        "label": "1 cup sliced",
+        "grams": 165
+      }
+    }
+  ],
+  "benchmarks": [
+    {
+      "id": "egg",
+      "name": "Egg (large, boiled)",
+      "emoji": "🥚",
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 173424,
+        "description": "Egg, whole, cooked, hard-boiled"
+      },
+      "serving": {
+        "label": "1 large egg",
+        "grams": 50
+      }
+    },
+    {
+      "id": "chicken-breast",
+      "name": "Chicken breast (roasted)",
+      "emoji": "🍗",
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 171477,
+        "description": "Chicken, broilers or fryers, breast, meat only, cooked, roasted"
+      },
+      "serving": {
+        "label": "½ breast",
+        "grams": 86
+      }
+    },
+    {
+      "id": "beef-mince",
+      "name": "Beef mince (cooked, 85% lean)",
+      "emoji": "🥩",
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 174034,
+        "description": "Beef, ground, 85% lean meat / 15% fat, crumbles, cooked, pan-browned"
+      },
+      "serving": {
+        "label": "3 oz",
+        "grams": 85
+      }
+    },
+    {
+      "id": "salmon",
+      "name": "Salmon (cooked)",
+      "emoji": "🐟",
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 175168,
+        "description": "Fish, salmon, Atlantic, farmed, cooked, dry heat"
+      },
+      "serving": {
+        "label": "3 oz",
+        "grams": 85
+      }
+    },
+    {
+      "id": "milk",
+      "name": "Whole cow's milk",
+      "emoji": "🥛",
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 171265,
+        "description": "Milk, whole, 3.25% milkfat, with added vitamin D"
+      },
+      "serving": {
+        "label": "1 cup",
+        "grams": 244
+      }
+    },
+    {
+      "id": "cheddar",
+      "name": "Cheddar",
+      "emoji": "🧀",
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 173414,
+        "description": "Cheese, cheddar (Includes foods for USDA's Food Distribution Program)"
+      },
+      "serving": {
+        "label": "1 slice (1 oz)",
+        "grams": 28
+      }
+    },
+    {
+      "id": "greek-yogurt",
+      "name": "Greek yogurt (plain, fat-free)",
+      "emoji": "🥣",
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170894,
+        "description": "Yogurt, Greek, plain, nonfat (Includes foods for USDA's Food Distribution Program)"
+      },
+      "serving": {
+        "label": "1 pot (170 g)",
+        "grams": 170
+      }
+    },
+    {
+      "id": "bacon",
+      "name": "Bacon (cooked)",
+      "emoji": "🥓",
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 168322,
+        "description": "Pork, cured, bacon, pre-sliced, cooked, pan-fried"
+      },
+      "serving": {
+        "label": "3 slices",
+        "grams": 34.5
+      },
+      "servingSource": "chosen"
+    }
+  ]
+}

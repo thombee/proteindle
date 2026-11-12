@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Proteindle: guess the mystery plant</title>
+<meta name="description" content="A daily guessing game. Find the mystery plant food in six tries from its protein, calories, carbs and fat.">
+<meta property="og:title" content="Proteindle">
+<meta property="og:description" content="Guess the mystery plant food in six tries. A new one every day.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f5f1e6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101612" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌱%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="bar">
+    <button class="icon-btn" id="help-btn" type="button" aria-label="How to play">?</button>
+    <h1 class="logo"><span aria-hidden="true">🌱</span> Protein<b>dle</b></h1>
+    <button class="icon-btn" id="stats-btn" type="button" aria-label="Your stats">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 20V11M12 20V4M19 20v-6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+    </button>
+  </header>
+  <p class="tagline">Guess the mystery plant food in six tries. <span id="day-tag"></span></p>
+
+  <div class="preview-bar" id="preview-bar" hidden>
+    <span>Preview</span>
+    <button type="button" id="prev-day" aria-label="Previous day">◀</button>
+    <b id="preview-day"></b>
+    <button type="button" id="next-day" aria-label="Next day">▶</button>
+    <span>nothing is saved</span>
+  </div>
+
+  <section class="entry" id="entry" aria-label="Make a guess">
+    <div class="combo">
+      <input id="guess" type="text" role="combobox" aria-expanded="false" aria-controls="options" aria-autocomplete="list"
+        aria-label="Type a plant food" placeholder="Type a plant food…" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go">
+      <ul id="options" role="listbox" aria-label="Foods" hidden></ul>
+    </div>
+    <div class="entry-meta">
+      <span id="count"></span>
+      <button class="chip-btn" id="hint-btn" type="button" hidden>💡 Show a hint</button>
+    </div>
+  </section>
+
+  <section class="board" aria-label="Your guesses">
+    <div class="cols" aria-hidden="true">
+      <span>Group</span><span>Protein</span><span>Calories</span><span>Carbs</span><span>Fat</span>
+    </div>
+    <div class="row mystery" id="mystery"></div>
+    <ol class="rows" id="rows"></ol>
+    <p class="legend">Numbers are per 100 g of the food you guessed. <b>▲</b> the mystery food has more, <b>▼</b> less. Two arrows mean a lot.</p>
+  </section>
+
+  <section class="reveal" id="reveal" hidden></section>
+
+  <footer class="foot">Figures are for each food as eaten, from <a href="https://fdc.nal.usda.gov/" target="_blank" rel="noopener">USDA FoodData Central</a>.</footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="sr-only" id="live" aria-live="polite"></div>
+
+<dialog id="help" aria-labelledby="help-title">
+  <div class="sheet">
+    <button class="close" type="button" data-close aria-label="Close">✕</button>
+    <h2 id="help-title">How to play</h2>
+    <p>Guess the mystery plant food in six tries. Every guess is a food, and its tiles tell you how the mystery food compares, per 100 g.</p>
+    <div class="example" aria-hidden="true">
+      <div class="row-name"><span>🫘</span> Chickpeas (cooked)</div>
+      <div class="tiles">
+        <div class="tile is-far"><span class="t-main">🫘</span><span class="t-sub">Beans ✕</span></div>
+        <div class="tile is-far"><span class="t-main">8.9<small>g</small></span><span class="t-sub">▲▲</span></div>
+        <div class="tile is-close"><span class="t-main">164</span><span class="t-sub">▲</span></div>
+        <div class="tile is-close"><span class="t-main">27.4<small>g</small></span><span class="t-sub">▼</span></div>
+        <div class="tile is-match"><span class="t-main">2.6<small>g</small></span><span class="t-sub">✓</span></div>
+      </div>
+    </div>
+    <ul class="key">
+      <li><span class="swatch is-far">✕</span> The mystery food is not in the beans group.</li>
+      <li><span class="swatch is-far">▲▲</span> It has a lot more protein than chickpeas' 8.9 g.</li>
+      <li><span class="swatch is-close">▲</span> It has a little more than 164 calories. Yellow means close: within about a quarter.</li>
+      <li><span class="swatch is-close">▼</span> It has a little less than 27.4 g of carbs.</li>
+      <li><span class="swatch is-match">✓</span> Its fat is the same as chickpeas', or nearly.</li>
+    </ul>
+    <p>The top row keeps track of what you have worked out. After four guesses you can ask for a hint.</p>
+    <p class="fine">Foods are measured the way they are eaten: beans, lentils, rice and pasta are cooked. There is a new plant every day at midnight, and it is the same for everyone.</p>
+    <label class="switch"><input type="checkbox" id="contrast"> High-contrast colours</label>
+    <button class="primary" type="button" data-close>Play</button>
+  </div>
+</dialog>
+
+<dialog id="stats" aria-labelledby="stats-title">
+  <div class="sheet">
+    <button class="close" type="button" data-close aria-label="Close">✕</button>
+    <h2 id="stats-title">Your stats</h2>
+    <div id="stats-body"></div>
+  </div>
+</dialog>
+
+<script src="foods.js"></script>
+<script src="schedule.js"></script>
+<script src="logic.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
