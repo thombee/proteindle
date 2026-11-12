@@ -10,8 +10,8 @@
   var FOODS = window.PROTEINDLE_FOODS;
   var BENCH = window.PROTEINDLE_BENCHMARKS;
 
-  // The address added to shared results. Leave empty until the game has a home.
-  var SITE_URL = '';
+  // The address added to shared results.
+  var SITE_URL = 'https://thombee.github.io/proteindle/';
   var STORE_KEY = 'proteindle:v2';
 
   var root = document.documentElement;

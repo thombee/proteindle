@@ -19,6 +19,8 @@ const require = createRequire(import.meta.url);
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const P = require('../logic.js');
 const { PROTEINDLE_FOODS: FOODS, PROTEINDLE_BENCHMARKS: BENCH } = require('../foods.js');
+// The address the game adds to shared results, read from app.js so the two cannot drift apart.
+const SITE_URL = /var SITE_URL = '([^']*)'/.exec(fs.readFileSync(path.join(ROOT, 'app.js'), 'utf8'))[1];
 const SHOTS = process.env.SHOTS;
 if (SHOTS) fs.mkdirSync(SHOTS, { recursive: true });
 
@@ -220,8 +222,8 @@ await check('a full day: right and wrong picks, the score card, sharing, stats a
   // Sharing copies the pattern and the score, and no food names.
   const picks = R1.map((r, i) => (i === 1 ? other(r.winner) : r.winner));
   const text = await sharedText(page);
-  assert.equal(text, P.shareText(1, R1, picks, ''));
-  assert.equal(text, 'Proteindle #1 🌱 9/10\n🟩🟥🟩🟩🟩🟩🟩🟩🟩🟩');
+  assert.equal(text, P.shareText(1, R1, picks, SITE_URL));
+  assert.equal(text, 'Proteindle #1 🌱 9/10\n🟩🟥🟩🟩🟩🟩🟩🟩🟩🟩' + (SITE_URL ? '\n' + SITE_URL : ''));
 
   await page.click('#stats-btn');
   assert.deepEqual(await page.$$eval('#stats .nums b', (b) => b.map((x) => x.textContent)), ['1', '9.0', '1', '1']);

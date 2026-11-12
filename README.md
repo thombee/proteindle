@@ -6,7 +6,9 @@ An earlier version of the game, in which the player worked out a mystery food fr
 
 ## Play it
 
-Open `index.html` in a browser. There is no build step and nothing to install.
+The game is live at https://thombee.github.io/proteindle/, served by GitHub Pages from the `main` branch of `thombee/proteindle`. Pushing to `main` updates it.
+
+To run it locally, open `index.html` in a browser. There is no build step and nothing to install.
 
 - `index.html?day=7` plays day 7 in preview mode: any day can be played and nothing is saved.
 - `npm run bundle` writes `dist/proteindle.html`, the whole game as one file, and `dist/proteindle-preview.html`, the same in preview mode.
@@ -41,7 +43,7 @@ Other things the game does:
 - **The streak** counts days played in a row, whatever the score.
 - **Midnight**: a day nobody has started moves on by itself. A day in progress can be finished, and counts for the day it belongs to, only while the page stays open: reloading or coming back after midnight always starts the new day.
 - **Two tabs** stay in step and do not overwrite each other. A tab that has fallen behind takes the saved game when tapped, rather than recording the tap.
-- **Sharing** copies the score and a row of squares, and never the foods. Set `SITE_URL` in `app.js` to add the game's address.
+- **Sharing** copies the score, a row of squares and the game's address (`SITE_URL` in `app.js`), and never the foods.
 
 ## Files
 
@@ -71,9 +73,8 @@ Every number comes from USDA FoodData Central, which is public domain. `data/pic
 
 Foods that are missing because no trustworthy record was found: seitan, nutritional yeast and red lentils.
 
-## Before going public
+## Before sharing it widely
 
 - **The name is taken.** Two live sites already use "Proteindle": a biology game at proteindle.github.io and, closer to this one, a "which food has more protein" game at proteindle.vercel.app. Decide whether to rename.
-- Set `SITE_URL` in `app.js`.
 - Changing the food list or the rules in `dailyRounds` changes the match-ups of every day, so do it between days, not while people are mid-game.
 - The research behind the design is in `~/Documents/research/daily-games-what-makes-them-stick-2026-11.md`.
