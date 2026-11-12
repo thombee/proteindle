@@ -48,8 +48,9 @@
   }
 
   function fmt(v) { return Number.isInteger(v) ? String(v) : v.toFixed(1); }
+  // "1 cup · 198 g". The no-break spaces keep a number and its unit on one line.
   function servingText(s) {
-    return /\d\s*g\)/.test(s.label) ? s.label : s.label + ' · ' + Math.round(s.grams) + ' g';
+    return /\d\s*g\)/.test(s.label) ? s.label : s.label + ' ·\u00a0' + Math.round(s.grams) + '\u00a0g';
   }
   function ordinal(n) {
     var t = n % 100, u = n % 10;
@@ -155,11 +156,27 @@
       renderMystery();
       renderEntry();
       if (over) {
-        if (S.won) toast(WIN_WORDS[S.guesses.length - 1]);
+        if (S.won) { toast(WIN_WORDS[S.guesses.length - 1]); celebrate(); }
         renderReveal();
         if (!REDUCED) $('reveal').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
     }, FLIP_MS);
+  }
+
+  // A short shower of leaves (and the answer's own emoji) after a win.
+  function celebrate() {
+    if (REDUCED) return;
+    var bits = [S.answer.emoji, '🌱', '🌿', '🍃'];
+    var layer = el('div', { class: 'confetti', 'aria-hidden': 'true' });
+    for (var i = 0; i < 18; i++) {
+      layer.appendChild(el('span', {
+        text: bits[i % bits.length],
+        style: '--x:' + (Math.random() * 96).toFixed(1) + '%;--delay:' + (Math.random() * 0.5).toFixed(2) + 's;--spin:' +
+          Math.round(Math.random() * 360 - 180) + 'deg;--time:' + (1.5 + Math.random()).toFixed(2) + 's',
+      }));
+    }
+    document.body.appendChild(layer);
+    setTimeout(function () { layer.remove(); }, 3500);
   }
 
   // ---- drawing the board
@@ -366,9 +383,9 @@
     if (S.bonusQ && !S.bonus) return; // the facts wait until the bonus is answered or skipped
 
     box.appendChild(el('div', { class: 'facts' }, [
-      fact(fmt(a.protein) + ' g', 'protein per 100 g'),
+      fact(fmt(a.protein) + ' g', 'protein per 100\u00a0g'),
       fact(fmt(P.proteinOn('serving', a)) + ' g', 'in ' + servingText(a.serving)),
-      fact(fmt(P.proteinOn('kcal', a)) + ' g', 'per 100 calories'),
+      fact(fmt(P.proteinOn('kcal', a)) + ' g', 'per 100\u00a0calories'),
     ]));
     box.appendChild(el('div', { class: 'tabs', role: 'group', 'aria-label': 'Compare protein' }, P.BASES.map(function (b) {
       return el('button', {
@@ -378,12 +395,15 @@
     })));
     box.appendChild(bars());
     var r = P.rank(a, FOODS);
-    box.appendChild(el('p', { class: 'rank', text: 'For protein per 100 g, ' + a.name + ' is ' + ordinal(r.place) + ' of the ' + r.of + ' plant foods in the game.' }));
+    box.appendChild(el('p', { class: 'rank', text: 'Protein per 100 g: ' + (r.place === 1 ? 'the' : ordinal(r.place)) + ' highest of the ' + r.of + ' plant foods in the game.' }));
     box.appendChild(el('div', { class: 'actions' }, [
       el('button', { class: 'primary', type: 'button', text: 'Share result', onclick: share }),
       el('button', { class: 'secondary', type: 'button', text: 'Stats', onclick: openStats }),
     ]));
     box.appendChild(el('pre', { class: 'share-text', id: 'share-text', hidden: true }));
+    if (S.persist && store.stats.streak >= 2) {
+      box.appendChild(el('p', { class: 'streak', text: '🔥 ' + store.stats.streak + ' days in a row' }));
+    }
     box.appendChild(el('p', { class: 'next', id: 'next' }));
     tick();
   }
@@ -548,6 +568,8 @@
 
   $('guess').addEventListener('input', openList);
   $('guess').addEventListener('focus', openList);
+  // A click on a box that already has focus fires no focus event, so open the list on click too.
+  $('guess').addEventListener('click', function () { if ($('options').hidden) openList(); });
   $('guess').addEventListener('keydown', onKey);
   // Keep the text box focused while the list is clicked, so the list does not close first.
   $('options').addEventListener('mousedown', function (e) { e.preventDefault(); });
