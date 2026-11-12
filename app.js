@@ -59,10 +59,19 @@
 
   // ---- saved progress
 
-  function loadStore() {
-    var s = { v: 1, stats: P.emptyStats(), pantry: [], game: null, seenHelp: false, contrast: false };
+  function emptyStore() {
+    return { v: 1, stats: P.emptyStats(), pantry: [], game: null, seenHelp: false, contrast: false };
+  }
+  // The saved progress, or null if this browser will not let the page read localStorage.
+  function readStore() {
+    var raw;
+    try { raw = localStorage.getItem(STORE_KEY); } catch (e) { return null; }
+    return parseStore(raw);
+  }
+  function parseStore(raw) {
+    var s = emptyStore();
     try {
-      var d = JSON.parse(localStorage.getItem(STORE_KEY) || 'null');
+      var d = JSON.parse(raw || 'null');
       if (!d || d.v !== 1) return s;
       var st = d.stats || {};
       ['played', 'won', 'streak', 'best', 'lastDay'].forEach(function (k) {
@@ -84,13 +93,31 @@
       }
       s.seenHelp = d.seenHelp === true;
       s.contrast = d.contrast === true;
-    } catch (e) { /* storage blocked or corrupt: start clean */ }
+    } catch (e) { /* corrupt: start clean */ }
     return s;
   }
   function save() {
-    try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); } catch (e) { /* play on without saving */ }
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); } catch (e) { cannotSave(); }
   }
-  var store = loadStore();
+  // Change one preference. The store is read again first, so the write carries whatever
+  // another tab has saved since this one last looked, not this tab's older copy of the game.
+  function savePref(key, value) {
+    var fresh = readStore();
+    if (fresh) store = fresh;
+    store[key] = value;
+    save();
+  }
+  var store = readStore();
+  if (!store) { store = emptyStore(); cannotSave(); }
+
+  // Shown once, under the board, when the browser will not keep the player's progress.
+  function cannotSave() {
+    if (PREVIEW) return;
+    var note = $('save-note');
+    if (!note.hidden) return;
+    note.hidden = false;
+    $('live').textContent = note.textContent;
+  }
 
   // ---- the current round
 
@@ -102,7 +129,7 @@
     var answer = byId[P.answerId(day, SCHEDULE)];
     S = {
       day: day, persist: persist, answer: answer, guesses: [], grades: [],
-      hint: false, bonus: null, done: false, won: false, busy: false,
+      hint: false, freeHint: false, bonus: null, done: false, won: false, busy: false,
       bonusQ: P.bonusQuestion(answer, BENCH, day), basis: 'serving',
     };
     if (persist && store.game && store.game.day === day) {
@@ -116,6 +143,8 @@
       S.bonus = store.game.bonus;
     }
     S.grades = S.guesses.map(function (g) { return P.grade(g, answer); });
+    // hint: the player asked for it. freeHint: a guess matched every tile, so it came free.
+    S.freeHint = S.grades.some(P.sameNumbers);
     S.won = S.grades.some(function (g) { return g.solved; });
     S.done = S.won || S.guesses.length >= P.MAX_GUESSES;
     if (S.bonusQ) S.basis = S.bonusQ.basis;
@@ -133,6 +162,8 @@
     if (S.done || S.busy) return;
     if (S.guesses.indexOf(food) >= 0) { toast('You already guessed that'); return; }
     var game = S, grade = P.grade(food, S.answer);
+    var twin = P.sameNumbers(grade), knewLetter = S.hint || S.freeHint;
+    if (twin) S.freeHint = true;
     S.guesses.push(food);
     S.grades.push(grade);
     var over = grade.solved || S.guesses.length >= P.MAX_GUESSES;
@@ -155,6 +186,7 @@
       if (row) { row.classList.remove('fresh'); if (S.won) row.classList.add('won'); }
       renderMystery();
       renderEntry();
+      if (twin && !over) toast('Same numbers, different food.' + (knewLetter ? '' : ' It starts with ' + firstLetter() + '.'));
       if (over) {
         if (S.won) { toast(WIN_WORDS[S.guesses.length - 1]); celebrate(); }
         renderReveal();
@@ -188,7 +220,7 @@
   function spoken(col, cell) {
     var head = col.label + ': ' + fmt(cell.value) + (col.unit ? ' grams. ' : '. ');
     if (cell.state === 'match') return head + 'Match.';
-    return head + 'The mystery food has ' + (cell.state === 'far' ? 'a lot ' : 'a little ') + (cell.dir === 'up' ? 'more.' : 'less.');
+    return head + 'The mystery food has ' + (cell.dir === 'up' ? 'more' : 'less') + (cell.state === 'far' ? ', and is not close.' : ', and is close.');
   }
   function tile(cls, i, label, main, sub) {
     return el('div', { class: 'tile ' + cls, style: '--i:' + i, role: 'img', 'aria-label': label }, [
@@ -255,16 +287,18 @@
         }));
       box.appendChild(el('div', { class: 'row-name' }, [
         el('span', { 'aria-hidden': 'true', text: '❓' }), 'Mystery food',
-        S.hint ? el('span', { class: 'tag', text: 'Starts with ' + a.name.charAt(0).toUpperCase() }) : null,
+        S.hint || S.freeHint ? el('span', { class: 'tag', text: 'Starts with ' + firstLetter() }) : null,
       ]));
     }
     box.appendChild(el('div', { class: 'tiles' }, tiles));
   }
 
+  function firstLetter() { return S.answer.name.charAt(0).toUpperCase(); }
+
   function renderEntry() {
     $('entry').hidden = S.done;
     $('count').textContent = 'Guess ' + Math.min(S.guesses.length + 1, P.MAX_GUESSES) + ' of ' + P.MAX_GUESSES;
-    $('hint-btn').hidden = S.hint || S.done || S.guesses.length < P.HINT_AFTER;
+    $('hint-btn').hidden = S.hint || S.freeHint || S.done || S.guesses.length < P.HINT_AFTER;
   }
 
   function renderAll() {
@@ -380,7 +414,8 @@
       ]),
     ]));
     if (S.bonusQ) box.appendChild(bonusBlock());
-    if (S.bonusQ && !S.bonus) return; // the facts wait until the bonus is answered or skipped
+    // The facts wait until the bonus is answered or skipped; the line about the next plant does not.
+    if (S.bonusQ && !S.bonus) { box.appendChild(nextLine()); tick(); return; }
 
     box.appendChild(el('div', { class: 'facts' }, [
       fact(fmt(a.protein) + ' g', 'protein per 100\u00a0g'),
@@ -389,8 +424,8 @@
     ]));
     box.appendChild(el('div', { class: 'tabs', role: 'group', 'aria-label': 'Compare protein' }, P.BASES.map(function (b) {
       return el('button', {
-        type: 'button', 'aria-pressed': b.key === S.basis ? 'true' : 'false', text: b.label,
-        onclick: function () { S.basis = b.key; renderReveal(); },
+        type: 'button', 'aria-pressed': b.key === S.basis ? 'true' : 'false', 'data-basis': b.key, text: b.label,
+        onclick: function () { showBasis(b.key); },
       });
     })));
     box.appendChild(bars());
@@ -404,8 +439,19 @@
     if (S.persist && store.stats.streak >= 2) {
       box.appendChild(el('p', { class: 'streak', text: '🔥 ' + store.stats.streak + ' days in a row' }));
     }
-    box.appendChild(el('p', { class: 'next', id: 'next' }));
+    box.appendChild(nextLine());
     tick();
+  }
+  function nextLine() { return el('p', { class: 'next', id: 'next' }); }
+
+  // Switch the comparison basis. Only the bars are replaced, so the pressed tab keeps focus.
+  function showBasis(key) {
+    S.basis = key;
+    Array.prototype.forEach.call(document.querySelectorAll('#reveal .tabs button'), function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-basis') === key ? 'true' : 'false');
+    });
+    var old = document.querySelector('#reveal .bars');
+    if (old) old.replaceWith(bars());
   }
 
   function fact(big, small) {
@@ -434,15 +480,26 @@
     return el('div', { class: 'bonus' }, [
       el('p', { class: 'bonus-q' }, [el('span', { text: 'Bonus round' }), P.basis(q.basis).lead + ', which has more protein?']),
       el('div', { class: 'bonus-opts' }, [option('food', a, q.food), option('other', q.benchmark, q.other)]),
-      note ? el('p', { class: 'bonus-note', text: note }) : null,
+      note ? el('p', { class: 'bonus-note', tabindex: '-1', text: note }) : null,
       answered ? null : el('button', { class: 'link-btn', type: 'button', text: 'Skip', onclick: function () { answerBonus(null); } }),
     ]);
   }
   function answerBonus(side) {
     if (S.bonus) return;
-    S.bonus = side === null ? 'skip' : side === S.bonusQ.winner ? 'right' : 'wrong';
+    var q = S.bonusQ;
+    S.bonus = side === null ? 'skip' : side === q.winner ? 'right' : 'wrong';
     if (S.persist) snapshot();
     renderReveal();
+    // The card was rebuilt, so put focus somewhere sensible and say how it went.
+    if (S.bonus === 'skip') {
+      var tab = document.querySelector('#reveal .tabs button');
+      if (tab) tab.focus();
+      return;
+    }
+    var note = document.querySelector('#reveal .bonus-note');
+    if (note) note.focus();
+    $('live').textContent = (S.bonus === 'right' ? 'Right. ' : 'Not this time. ') +
+      S.answer.name + ' ' + fmt(q.food) + ' grams, ' + q.benchmark.name + ' ' + fmt(q.other) + ' grams.';
   }
 
   function bars() {
@@ -581,12 +638,12 @@
     if (!e.target.closest || !e.target.closest('.combo')) closeList();
   });
   $('hint-btn').addEventListener('click', function () {
-    if (S.done || S.hint) return;
+    if (S.done || S.hint || S.freeHint) return;
     S.hint = true;
     if (S.persist) snapshot();
     renderMystery();
     renderEntry();
-    toast('It starts with ' + S.answer.name.charAt(0).toUpperCase());
+    toast('It starts with ' + firstLetter());
   });
   $('help-btn').addEventListener('click', function () { openDialog('help'); });
   $('stats-btn').addEventListener('click', openStats);
@@ -596,23 +653,42 @@
     });
   });
   $('contrast').addEventListener('change', function () {
-    store.contrast = $('contrast').checked;
-    save();
+    savePref('contrast', $('contrast').checked);
     applyContrast();
   });
   $('prev-day').addEventListener('click', function () { if (S.day > 1) startGame(S.day - 1, false); });
   $('next-day').addEventListener('click', function () { startGame(S.day + 1, false); });
-  // A page left open overnight moves on to the new day when the player comes back to it.
-  document.addEventListener('visibilitychange', function () {
-    if (!document.hidden && S.persist && !S.done && today() !== S.day) startGame(today(), true);
+  // A page left open past midnight moves on to the new day by itself if the round has not
+  // been started. A started round stays until it is finished and counts for its own day;
+  // once it is finished, the line under the reveal card offers the new plant.
+  function rollOver() {
+    if (S.persist && !S.done && !S.guesses.length && today() !== S.day) startGame(today(), true);
+  }
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) rollOver(); });
+  setInterval(function () { rollOver(); tick(); }, 1000);
+
+  // Another tab saved progress. Take its copy, so this tab never writes back an older one,
+  // and redraw the round if the saved one is not what this tab is showing.
+  window.addEventListener('storage', function (e) {
+    if (e.key !== STORE_KEY && e.key !== null) return;
+    var fresh = readStore();
+    if (!fresh) return;
+    store = fresh;
+    applyContrast();
+    if (!S.persist || !store.game) return;
+    var g = store.game;
+    if (g.day === S.day) {
+      var same = g.guesses.join() === S.guesses.map(function (f) { return f.id; }).join() && g.hint === S.hint && g.bonus === S.bonus;
+      if (!same) startGame(S.day, true);
+    } else if (g.day === today()) {
+      startGame(today(), true);
+    }
   });
-  setInterval(tick, 1000);
 
   applyContrast();
   startGame(forcedDay > 0 ? forcedDay : today(), !PREVIEW);
   if (!PREVIEW && !store.seenHelp) {
-    store.seenHelp = true;
-    save();
+    savePref('seenHelp', true);
     openDialog('help');
   }
 })();

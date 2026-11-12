@@ -3,7 +3,7 @@
   "private": true,
   "description": "A daily guessing game about protein in plant foods.",
   "scripts": {
-    "test": "node --test scripts/test-logic.mjs",
+    "test": "node --test scripts/test-logic.mjs && node scripts/check-contrast.mjs",
     "e2e": "node scripts/e2e.mjs",
     "bundle": "node scripts/bundle.mjs",
     "simulate": "node scripts/simulate.mjs",

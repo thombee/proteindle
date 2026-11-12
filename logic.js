@@ -21,14 +21,15 @@
   };
 
   // The four numbers a guess is graded on, all per 100 g.
-  // A tile is a "match" or "close" when the two values differ by no more than the
-  // absolute band or the relative band, whichever allows more. The absolute band
-  // stops tiny values (0.2 g of fat against 0.4 g) from counting as far apart.
+  // A tile is a "match" when the two values differ by no more than the fixed `match`
+  // amount. It is "close" when they differ by no more than the absolute or the relative
+  // `close` band, whichever allows more; the absolute band stops tiny values (0.3 g of
+  // protein against 1.1 g) from counting as far apart.
   var COLUMNS = [
-    { key: 'protein', label: 'Protein', unit: 'g', match: { abs: 0.5, rel: 0.05 }, close: { abs: 2, rel: 0.25 } },
-    { key: 'kcal', label: 'Calories', unit: '', match: { abs: 10, rel: 0.05 }, close: { abs: 25, rel: 0.25 } },
-    { key: 'carbs', label: 'Carbs', unit: 'g', match: { abs: 1, rel: 0.05 }, close: { abs: 3, rel: 0.25 } },
-    { key: 'fat', label: 'Fat', unit: 'g', match: { abs: 0.5, rel: 0.05 }, close: { abs: 2, rel: 0.25 } },
+    { key: 'protein', label: 'Protein', unit: 'g', match: { abs: 0.5, rel: 0 }, close: { abs: 2, rel: 0.25 } },
+    { key: 'kcal', label: 'Calories', unit: '', match: { abs: 10, rel: 0 }, close: { abs: 25, rel: 0.25 } },
+    { key: 'carbs', label: 'Carbs', unit: 'g', match: { abs: 1, rel: 0 }, close: { abs: 3, rel: 0.25 } },
+    { key: 'fat', label: 'Fat', unit: 'g', match: { abs: 0.5, rel: 0 }, close: { abs: 2, rel: 0.25 } },
   ];
 
   function within(a, b, band) {
@@ -49,6 +50,14 @@
       return { key: col.key, value: g, state: state, dir: state === 'match' ? null : a > g ? 'up' : 'down' };
     });
     return { solved: solved, group: { value: guess.group, state: guess.group === answer.group ? 'match' : 'far' }, cells: cells };
+  }
+
+  /*
+   * True when a guess is the wrong food but every tile matches: the tiles cannot tell the
+   * two foods apart, so the game gives the first-letter hint for free.
+   */
+  function sameNumbers(grade) {
+    return !grade.solved && grade.group.state === 'match' && grade.cells.every(function (c) { return c.state === 'match'; });
   }
 
   // ---- the daily puzzle
@@ -210,10 +219,11 @@
 
   /*
    * Record a finished daily round. The streak counts days played in a row, win or lose,
-   * so one hard puzzle does not wipe it out. Recording the same day twice changes nothing.
+   * so one hard puzzle does not wipe it out. A day that is not later than the last one
+   * recorded changes nothing, so a clock set back (or a flight west) cannot count a day twice.
    */
   function recordResult(stats, day, won, guesses) {
-    if (stats.lastDay === day) return stats;
+    if (day <= stats.lastDay) return stats;
     var s = { played: stats.played + 1, won: stats.won + (won ? 1 : 0), dist: stats.dist.slice(), lastDay: day };
     s.streak = stats.lastDay === day - 1 ? stats.streak + 1 : 1;
     s.best = Math.max(stats.best, s.streak);
@@ -223,7 +233,7 @@
 
   var api = {
     MAX_GUESSES: MAX_GUESSES, HINT_AFTER: HINT_AFTER, EPOCH: EPOCH, GROUPS: GROUPS, COLUMNS: COLUMNS,
-    within: within, grade: grade, dayNumber: dayNumber, answerId: answerId, msUntilTomorrow: msUntilTomorrow,
+    within: within, grade: grade, sameNumbers: sameNumbers, dayNumber: dayNumber, answerId: answerId, msUntilTomorrow: msUntilTomorrow,
     fold: fold, search: search, perServing: perServing, per100kcal: per100kcal,
     BASES: BASES, basis: basis, proteinOn: proteinOn, bonusQuestion: bonusQuestion,
     comparison: comparison, rank: rank, knowledge: knowledge, shareText: shareText,

@@ -34,8 +34,10 @@ function play(answer, sigma, useHint = false) {
     let best = [], bestScore = Infinity;
     for (const f of FOODS) {
       if (seen.some((s) => s.guess.id === f.id)) continue;
-      // The hint gives the first letter once enough guesses are used.
-      if (useHint && turn >= HINT && P.fold(f.name)[0] !== P.fold(answer.name)[0]) continue;
+      // The hint gives the first letter once enough guesses are used, or for free once a
+      // guess has matched every tile without being the answer.
+      const letter = (useHint && turn >= HINT) || seen.some((s) => P.sameNumbers(s.g));
+      if (letter && P.fold(f.name)[0] !== P.fold(answer.name)[0]) continue;
       const b = belief.get(f.id);
       let score = f.tier === 1 ? 0 : 0.15; // slight pull toward everyday foods
       for (const { guess: gu, g: gr } of seen) {

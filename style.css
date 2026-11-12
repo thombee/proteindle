@@ -2,11 +2,11 @@
 :root {
   --pd-bg: #f5f1e6;
   --pd-ink: #1b2a21;
-  --pd-muted: #66756b;
+  --pd-muted: #5c6a61;
   --pd-card: #fffdf6;
   --pd-line: #ddd6c3;
   --pd-blank: #ece7d8;
-  --pd-match: #2c9a5b;
+  --pd-match: #1a7443;
   --pd-match-ink: #fff;
   --pd-close: #f3b541;
   --pd-close-ink: #3b2a00;
@@ -27,7 +27,8 @@
     --pd-card: #18211b;
     --pd-line: #2c3930;
     --pd-blank: #1f2a23;
-    --pd-match: #2f9e5e;
+    --pd-match: #4cc47f;
+    --pd-match-ink: #05200f;
     --pd-close: #e0a530;
     --pd-close-ink: #261a00;
     --pd-far: #2a352e;
@@ -40,7 +41,7 @@
 }
 /* High-contrast tiles: blue and orange instead of green and yellow. */
 :root[data-contrast="high"] {
-  --pd-match: #1d6fe0;
+  --pd-match: #1a64cc;
   --pd-match-ink: #fff;
   --pd-close: #f58a1f;
   --pd-close-ink: #241000;
@@ -130,7 +131,7 @@ a { color: var(--pd-accent); }
 .tile.is-far { --tile-bg: var(--pd-far); --tile-ink: var(--pd-far-ink); }
 .tile.empty { height: 40px; background: transparent; border: 1.5px dashed var(--pd-line); }
 .t-main { font-size: 16px; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.t-main small { margin-left: 1px; font-size: 11px; font-weight: 700; opacity: .85; }
+.t-main small { margin-left: 1px; font-size: 11px; font-weight: 700; }
 .t-sub { margin-top: 3px; font-size: 11px; font-weight: 800; letter-spacing: .03em; white-space: nowrap; }
 
 .mystery .row-name { color: var(--pd-muted); }
@@ -142,6 +143,7 @@ a { color: var(--pd-accent); }
 .mystery.solved .tile { border: 0; background: var(--pd-match); color: var(--pd-match-ink); }
 .mystery.solved .t-main { font-size: 15px; }
 .legend { margin: 10px 2px 0; font-size: 12px; color: var(--pd-muted); text-align: center; }
+.save-note { margin: 6px 2px 0; font-size: 12px; font-weight: 700; text-align: center; }
 
 .row.fresh .row-name { animation: pd-fade .3s ease both; }
 .row.fresh .tile { animation: pd-flip .5s ease both; animation-delay: calc(var(--i) * 140ms); }

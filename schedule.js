@@ -1,6 +1,8 @@
 /*
  * Proteindle answer schedule: day 1 is the first id, and the list repeats when it runs out.
- * Written by scripts/build-schedule.mjs. Once the game is public, add to the end; do not reorder.
+ * Written by scripts/build-schedule.mjs. Once the game is public, do not reorder it. Answers
+ * may be added to the end only until the last scheduled day has been played; after that the
+ * list has wrapped round, and adding to it would change later days, so plan the change instead.
  */
 var PROTEINDLE_SCHEDULE = [
   "pumpkin-seeds",

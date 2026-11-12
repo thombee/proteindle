@@ -1,16 +1,19 @@
-// Plays the game in a real browser (your installed Google Chrome, headless) and checks what a player would see.
+// Plays the game in a real browser (headless) and checks what a player would see.
 //
-//   npm run e2e                     run the checks
+//   npm run e2e                     run the checks in your installed Google Chrome
+//   BROWSER=webkit npm run e2e      ... in Playwright's WebKit build (Safari's engine)
+//   BROWSER=firefox npm run e2e     ... in Playwright's Firefox build
 //   SHOTS=/some/dir npm run e2e     also save screenshots of each stage there
 //
-// Needs `npm install` once (playwright-core) and Google Chrome.
+// Needs `npm install` once (playwright-core), and Google Chrome or, for the other engines,
+// `npx playwright-core install webkit firefox`.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
-import { chromium } from 'playwright-core';
+import { chromium, webkit, firefox } from 'playwright-core';
 
 const require = createRequire(import.meta.url);
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -32,20 +35,72 @@ const server = http.createServer((req, res) => {
 await new Promise((ok) => server.listen(0, '127.0.0.1', ok));
 const BASE = `http://127.0.0.1:${server.address().port}`;
 
-const browser = await chromium.launch({ channel: 'chrome' });
+const ENGINES = {
+  chrome: { name: 'Google Chrome', launch: () => chromium.launch({ channel: 'chrome' }), install: 'Install Google Chrome' },
+  webkit: { name: "Playwright's WebKit", launch: () => webkit.launch(), install: 'Run: npx playwright-core install webkit' },
+  firefox: { name: "Playwright's Firefox", launch: () => firefox.launch(), install: 'Run: npx playwright-core install firefox' },
+};
+const ENGINE = (process.env.BROWSER || 'chrome').toLowerCase();
+if (!ENGINES[ENGINE]) {
+  console.error(`BROWSER=${ENGINE} is not one of: ${Object.keys(ENGINES).join(', ')}`);
+  process.exit(2);
+}
+let browser;
+try {
+  browser = await ENGINES[ENGINE].launch();
+} catch (err) {
+  const missing = /Executable doesn't exist|not found|install/i.test(String(err.message));
+  console.error(missing ? `${ENGINES[ENGINE].name} is not installed. ${ENGINES[ENGINE].install}` : `Could not start ${ENGINES[ENGINE].name}:\n${err.message}`);
+  server.close();
+  process.exit(2);
+}
+console.log(`browser: ${ENGINES[ENGINE].name} ${browser.version()}\n`);
 const results = [];
 
-async function open(url, opts = {}) {
+// Clipboard permissions can only be granted in Chrome. In WebKit and Firefox a test page cannot
+// read the clipboard back, so there the harness swaps in a stand-in clipboard that records what
+// the game copies. This is a limit of the test harness, not of the game.
+function stubClipboard() {
+  let copied = '';
+  Object.defineProperty(navigator, 'clipboard', {
+    configurable: true,
+    value: { writeText: (t) => { copied = String(t); return Promise.resolve(); }, readText: () => Promise.resolve(copied) },
+  });
+}
+// Every read and write of localStorage throws, as in a browser with site data blocked.
+function blockStorage() {
+  const no = () => { throw new DOMException('The operation is insecure.', 'SecurityError'); };
+  Storage.prototype.getItem = no;
+  Storage.prototype.setItem = no;
+}
+// This tab hears no storage events from other tabs, as if it had missed them.
+function deafToOtherTabs() {
+  window.addEventListener('storage', (e) => e.stopImmediatePropagation(), true);
+}
+
+async function newContext(opts = {}) {
   const ctx = await browser.newContext({
     viewport: { width: 390, height: 844 }, deviceScaleFactor: 2,
-    permissions: ['clipboard-read', 'clipboard-write'], ...opts.context,
+    ...(ENGINE === 'chrome' ? { permissions: ['clipboard-read', 'clipboard-write'] } : {}), ...opts.context,
   });
+  if (ENGINE !== 'chrome') await ctx.addInitScript(stubClipboard);
+  for (const script of opts.scripts ?? []) await ctx.addInitScript(script);
+  return ctx;
+}
+// Another tab in the same browser profile, sharing localStorage.
+async function openTab(ctx, url, opts = {}) {
   const page = await ctx.newPage();
   const errors = [];
   page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
   page.on('pageerror', (e) => errors.push(String(e)));
+  for (const script of opts.scripts ?? []) await page.addInitScript(script);
   if (opts.time) await page.clock.setFixedTime(new Date(opts.time));
   await page.goto(BASE + url);
+  return { page, errors };
+}
+async function open(url, opts = {}) {
+  const ctx = await newContext(opts);
+  const { page, errors } = await openTab(ctx, url, { time: opts.time });
   return { ctx, page, errors };
 }
 const shot = async (page, name) => { if (SHOTS) await page.screenshot({ path: path.join(SHOTS, name + '.png'), fullPage: true }); };
@@ -58,6 +113,18 @@ async function guess(page, text) {
   await settled(page);
 }
 const toastText = (page) => page.$eval('#toast', (t) => (t.classList.contains('show') ? t.textContent : ''));
+// Press the share button and return the text it copied (or showed, if copying failed).
+async function sharedText(page) {
+  await page.click('.actions .primary');
+  await page.waitForFunction(() => document.querySelector('#toast').classList.contains('show') && /Copied|Select/.test(document.querySelector('#toast').textContent));
+  return (await toastText(page)).startsWith('Copied') ? page.evaluate(() => navigator.clipboard.readText()) : page.textContent('#share-text');
+}
+const focused = (page) => page.evaluate(() => {
+  const a = document.activeElement;
+  return a ? { cls: a.className, text: a.textContent, pressed: a.getAttribute('aria-pressed') } : null;
+});
+const saved = async (page) => JSON.parse(await page.evaluate(() => localStorage.getItem('proteindle:v1')));
+const closeHelp = (page) => page.click('#help .primary');
 const noSidewaysScroll = async (page, label) => {
   const over = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   assert.ok(over <= 0, `${label}: page is ${over}px wider than the screen`);
@@ -128,20 +195,29 @@ await check('a first visit, a win, a reload, then a loss the next day', async ()
   assert.equal(await page.$('.facts'), null, 'the facts wait for the bonus answer');
   await shot(page, '06-bonus');
 
-  // The bonus: pumpkin seeds (8.6 g a serving) against whole milk (7.8 g a cup).
+  // The bonus: pumpkin seeds (8.6 g a serving) against whole milk (7.8 g a cup), answered
+  // from the keyboard. Focus moves to the result, and the result is read out.
   const q = P.bonusQuestion(food('pumpkin-seeds'), require('../foods.js').PROTEINDLE_BENCHMARKS, 1);
   assert.equal(q.winner, 'food');
-  await page.click('.bonus-opts button:nth-child(1)');
+  await page.focus('.bonus-opts button:nth-child(1)');
+  await page.keyboard.press('Enter');
   assert.equal(await page.textContent('.bonus-note'), '✓ Right.');
+  assert.equal((await focused(page)).cls, 'bonus-note', 'focus moves to the bonus result');
+  assert.equal(await page.textContent('#live'), "Right. Pumpkin seeds 8.6 grams, Whole cow's milk 7.8 grams.");
   assert.equal(await page.$$eval('.fact', (f) => f.length), 3);
   assert.equal(await page.$$eval('.bar-row', (r) => r.length), 9);
   assert.equal(await page.$$eval('.bar-row.mine', (r) => r.length), 1);
   for (const label of ['Per 100 g', 'Per 100 kcal', 'Per serving']) {
-    await page.click(`.tabs button:text-is("${label}")`);
+    await page.focus(`.tabs button:text-is("${label}")`);
+    await page.keyboard.press('Enter');
     assert.equal(await page.$eval('.tabs button[aria-pressed="true"]', (b) => b.textContent), label);
+    assert.deepEqual(await focused(page), { cls: '', text: label, pressed: 'true' }, `${label}: the pressed tab keeps focus`);
     const values = await page.$$eval('.bar-val', (v) => v.map((x) => parseFloat(x.textContent)));
     assert.deepEqual(values, [...values].sort((a, b) => b - a), `${label}: bars are largest first`);
   }
+  await page.click('.tabs button:text-is("Per 100 g")');
+  assert.equal(await page.$eval('.tabs button[aria-pressed="true"]', (b) => b.textContent), 'Per 100 g', 'tabs work with the mouse too');
+  await page.click('.tabs button:text-is("Per serving")');
   await page.waitForTimeout(600);
   await shot(page, '07-reveal');
   await noSidewaysScroll(page, 'reveal at 390px');
@@ -149,11 +225,7 @@ await check('a first visit, a win, a reload, then a loss the next day', async ()
   // Sharing copies the pattern, not the food.
   const answer = food('pumpkin-seeds');
   const expected = P.shareText(1, ['chickpeas', 'almonds', 'pumpkin-seeds'].map((id) => P.grade(food(id), answer)), true, { hint: false, bonus: true, url: '' });
-  await page.click('.actions .primary');
-  await page.waitForFunction(() => document.querySelector('#toast').classList.contains('show') && /Copied|Select/.test(document.querySelector('#toast').textContent));
-  const copied = (await toastText(page)).startsWith('Copied')
-    ? await page.evaluate(() => navigator.clipboard.readText())
-    : await page.textContent('#share-text');
+  const copied = await sharedText(page);
   assert.equal(copied, expected);
   assert.ok(!/pumpkin/i.test(copied));
 
@@ -166,7 +238,7 @@ await check('a first visit, a win, a reload, then a loss the next day', async ()
   // Coming back later the same day: everything is as it was left.
   await page.reload();
   assert.equal(await page.$eval('#help', (d) => d.open), false, 'help does not reopen');
-  assert.deepEqual(await rowNames(page), ['Chickpeas (cooked)', 'Almonds', 'Pumpkin seeds']);
+  assert.deepEqual(await rowNames(page), ['Chickpeas (cooked)', 'Almonds (raw)', 'Pumpkin seeds']);
   assert.equal(await page.textContent('.bonus-note'), '✓ Right.');
   assert.match(await page.textContent('#next'), /Next plant in \d\d:\d\d:\d\d/);
 
@@ -196,15 +268,13 @@ await check('a first visit, a win, a reload, then a loss the next day', async ()
   assert.equal(await page.textContent('#reveal h2'), 'Lentils (cooked)');
   await page.click('.bonus .link-btn');
   assert.equal(await page.$$eval('.fact', (f) => f.length), 3);
+  assert.equal((await focused(page)).text, 'Per serving', 'after a skip, focus moves to the first tab');
   await page.waitForTimeout(600);
   await shot(page, '10-loss');
   await page.click('#stats-btn');
   assert.deepEqual(await page.$$eval('#stats .nums b', (b) => b.map((x) => x.textContent)), ['2', '50', '2', '2']);
   await page.click('#stats .close');
-  await page.click('.actions .primary');
-  await page.waitForFunction(() => /Copied|Select/.test(document.querySelector('#toast').textContent));
-  const lost = (await toastText(page)).startsWith('Copied') ? await page.evaluate(() => navigator.clipboard.readText()) : await page.textContent('#share-text');
-  assert.match(lost, /^Proteindle #2 X\/6 💡\n/);
+  assert.match(await sharedText(page), /^Proteindle #2 X\/6 💡\n/);
 
   assert.deepEqual(errors, [], 'no errors in the browser console');
   await ctx.close();
@@ -252,6 +322,19 @@ for (const width of [320, 360, 430, 768, 1280]) {
       const { ctx, page, errors } = await open('/index.html?day=3', { context: { viewport: { width, height: 800 }, colorScheme, reducedMotion: 'reduce' } });
       for (const g of ['pumpkin seeds', 'chia seeds', 'tortilla chips', 'soybeans']) await guess(page, g);
       await noSidewaysScroll(page, 'mid-game');
+      if (width === 320) {
+        // Every food name fits on one line in the guess list.
+        const wrapped = await page.evaluate((names) => {
+          const row = document.querySelector('#rows .row-name');
+          const probe = row.cloneNode(true);
+          row.parentNode.insertBefore(probe, row);
+          const oneLine = probe.getBoundingClientRect().height;
+          const out = names.filter((n) => { probe.lastChild.textContent = n; return probe.getBoundingClientRect().height > oneLine + 1; });
+          probe.remove();
+          return out;
+        }, FOODS.map((f) => f.name));
+        assert.deepEqual(wrapped, [], 'food names that wrap at 320px');
+      }
       await page.focus('#guess');
       await noSidewaysScroll(page, 'list open');
       if (width === 360) await shot(page, `11-midgame-360-${colorScheme}`);
@@ -278,6 +361,146 @@ await check('high-contrast colours switch on and are remembered', async () => {
   await shot(page, '14-high-contrast');
   await page.reload();
   assert.equal(await page.getAttribute('html', 'data-contrast'), 'high');
+  await ctx.close();
+});
+
+// ---- midnight
+
+await check('a page left open over midnight with no guesses moves to the new day', async () => {
+  const { ctx, page, errors } = await open('/index.html', { time: '2026-11-12T23:59:58' });
+  await closeHelp(page);
+  assert.equal(await page.textContent('#day-tag'), '#1');
+  await page.clock.setFixedTime(new Date('2026-11-13T00:00:01'));
+  await page.waitForFunction(() => document.querySelector('#day-tag').textContent === '#2', null, { timeout: 4000 });
+  assert.deepEqual(await rowNames(page), []);
+  assert.deepEqual(errors, []);
+  await ctx.close();
+});
+
+await check('a round in progress at midnight stays, can be finished, then offers the new plant', async () => {
+  const { ctx, page, errors } = await open('/index.html', { time: '2026-11-12T23:59:50' });
+  await closeHelp(page);
+  await guess(page, 'almonds');
+  await page.clock.setFixedTime(new Date('2026-11-13T00:00:05'));
+  await page.waitForTimeout(1600); // more than one tick of the one-second timer
+  assert.equal(await page.textContent('#day-tag'), '#1', 'a started round is not taken away');
+  assert.deepEqual(await rowNames(page), ['Almonds (raw)']);
+  await guess(page, 'pumpkin');
+  await page.waitForSelector('#reveal:not([hidden])');
+  assert.match(await page.textContent('.rv-kicker'), /Solved in 2 of 6/);
+  // The bonus is still unanswered, and the new plant is already on offer.
+  assert.notEqual(await page.$('.bonus-opts button:not([disabled])'), null);
+  await page.waitForFunction(() => /A new plant is ready/.test(document.querySelector('#next')?.textContent ?? ''));
+  const store = await saved(page);
+  assert.deepEqual([store.stats.played, store.stats.won, store.stats.lastDay], [1, 1, 1], 'the round counts for day 1');
+  await page.click('#next button');
+  assert.equal(await page.textContent('#day-tag'), '#2');
+  assert.deepEqual(await rowNames(page), []);
+  assert.deepEqual(errors, []);
+  await ctx.close();
+});
+
+await check('a finished round with the bonus unanswered offers the new plant after midnight', async () => {
+  const { ctx, page, errors } = await open('/index.html', { time: DAY1 });
+  await closeHelp(page);
+  await guess(page, 'pumpkin');
+  await page.waitForSelector('#reveal:not([hidden])');
+  assert.equal(await page.$('.bonus-note'), null, 'the bonus is unanswered');
+  await page.waitForFunction(() => /Next plant in/.test(document.querySelector('#next')?.textContent ?? ''));
+  await page.clock.setFixedTime(new Date(DAY2));
+  await page.waitForFunction(() => /A new plant is ready/.test(document.querySelector('#next')?.textContent ?? ''), null, { timeout: 4000 });
+  assert.equal(await page.textContent('#day-tag'), '#1', 'a finished round stays until the player moves on');
+  assert.deepEqual(errors, []);
+  await ctx.close();
+});
+
+// ---- several tabs
+
+await check('two tabs share progress: a setting changed in a stale tab keeps a round finished in another', async () => {
+  const ctx = await newContext();
+  const a = await openTab(ctx, '/index.html', { time: DAY1 });
+  await closeHelp(a.page);
+  const b = await openTab(ctx, '/index.html', { time: DAY1 });
+  // This tab misses the other tabs' storage events, so only the fresh read before a write protects it.
+  const c = await openTab(ctx, '/index.html', { time: DAY1, scripts: [deafToOtherTabs] });
+  assert.equal(await b.page.$eval('#help', (d) => d.open), false);
+
+  await guess(a.page, 'almonds');
+  await guess(a.page, 'pumpkin');
+  await a.page.waitForSelector('#reveal:not([hidden])');
+  // A tab that hears about it redraws the round from what was saved.
+  await b.page.waitForSelector('#reveal:not([hidden])');
+  assert.deepEqual(await rowNames(b.page), ['Almonds (raw)', 'Pumpkin seeds']);
+  assert.deepEqual(await rowNames(c.page), [], 'the deaf tab still shows its stale round');
+
+  // Change a setting in the stale tab.
+  await c.page.click('#help-btn');
+  await c.page.check('#contrast');
+  const store = await saved(a.page);
+  assert.equal(store.contrast, true);
+  assert.deepEqual(store.game.guesses, ['almonds', 'pumpkin-seeds'], 'the finished round survives');
+  assert.deepEqual([store.stats.played, store.stats.won], [1, 1]);
+  // The tabs that hear the change take the new setting too.
+  await a.page.waitForFunction(() => document.documentElement.getAttribute('data-contrast') === 'high');
+  await b.page.waitForFunction(() => document.documentElement.getAttribute('data-contrast') === 'high');
+  await a.page.reload();
+  assert.deepEqual(await rowNames(a.page), ['Almonds (raw)', 'Pumpkin seeds']);
+  assert.deepEqual([...a.errors, ...b.errors, ...c.errors], []);
+  await ctx.close();
+});
+
+// ---- a wrong food with the same numbers
+
+const TWIN_DAY = 80, TWIN_TIME = '2027-01-30T10:00:00';
+assert.equal(P.answerId(TWIN_DAY, SCHEDULE), 'lettuce');
+assert.equal(P.dayNumber(new Date(TWIN_TIME)), TWIN_DAY);
+assert.equal(P.sameNumbers(P.grade(food('cucumber'), food('lettuce'))), true);
+
+await check('a wrong food with the same numbers gives the first letter for free', async () => {
+  const { ctx, page, errors } = await open('/index.html', { time: TWIN_TIME });
+  await closeHelp(page);
+  await guess(page, 'cucumber');
+  assert.equal(await toastText(page), 'Same numbers, different food. It starts with I.');
+  assert.equal(await page.textContent('#mystery .tag'), 'Starts with I');
+  for (const g of ['apple', 'almonds', 'white rice']) await guess(page, g);
+  assert.equal(await page.isHidden('#hint-btn'), true, 'no hint button once the letter is known');
+  await page.reload();
+  assert.equal(await page.textContent('#mystery .tag'), 'Starts with I', 'the free hint survives a reload');
+  await guess(page, 'iceberg');
+  await page.waitForSelector('#reveal:not([hidden])');
+  await page.click('.bonus .link-btn');
+  assert.match(await sharedText(page), new RegExp(`^Proteindle #${TWIN_DAY} 5/6\n`), 'a free hint adds no 💡');
+  assert.deepEqual(errors, []);
+  await ctx.close();
+});
+
+await check('a wrong food with the same numbers after the hint was taken', async () => {
+  const { ctx, page, errors } = await open(`/index.html?day=${TWIN_DAY}`);
+  for (const g of ['apple', 'almonds', 'white rice', 'tofu (firm)']) await guess(page, g);
+  await page.click('#hint-btn');
+  await guess(page, 'cucumber');
+  assert.equal(await toastText(page), 'Same numbers, different food.');
+  assert.equal(await page.textContent('#mystery .tag'), 'Starts with I');
+  assert.deepEqual(errors, []);
+  await ctx.close();
+});
+
+// ---- storage
+
+await check('when storage throws, the game says so once and stays playable', async () => {
+  const { ctx, page, errors } = await open('/index.html', { time: DAY1, scripts: [blockStorage] });
+  await closeHelp(page);
+  assert.equal(await page.isVisible('#save-note'), true);
+  assert.equal(await page.textContent('#save-note'), "Your progress can't be saved in this browser.");
+  assert.equal(await page.textContent('#live'), "Your progress can't be saved in this browser.", 'announced to screen readers');
+  await guess(page, 'almonds');
+  assert.notEqual(await page.textContent('#live'), "Your progress can't be saved in this browser.", 'announced once, not after every save');
+  await guess(page, 'pumpkin');
+  await page.waitForSelector('#reveal:not([hidden])');
+  await page.click('.bonus .link-btn');
+  assert.equal(await page.$$eval('.fact', (f) => f.length), 3);
+  assert.equal(await page.$$eval('#save-note', (n) => n.length), 1);
+  assert.deepEqual(errors, []);
   await ctx.close();
 });
 

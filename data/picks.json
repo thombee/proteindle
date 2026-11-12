@@ -538,7 +538,7 @@
     },
     {
       "id": "soy-milk",
-      "name": "Soy milk",
+      "name": "Soy milk (sweetened)",
       "aliases": [
         "soya milk",
         "soymilk",
@@ -663,7 +663,7 @@
     },
     {
       "id": "veggie-burger",
-      "name": "Veggie burger",
+      "name": "Veggie burger (uncooked)",
       "aliases": [
         "soy burger",
         "veggie patty",
@@ -1297,7 +1297,7 @@
     },
     {
       "id": "almonds",
-      "name": "Almonds",
+      "name": "Almonds (raw)",
       "aliases": [
         "almond",
         "raw almonds"
@@ -1399,7 +1399,7 @@
     },
     {
       "id": "pistachios",
-      "name": "Pistachios",
+      "name": "Pistachios (roasted)",
       "aliases": [
         "pistachio nuts",
         "pistachio"
@@ -1560,7 +1560,7 @@
     },
     {
       "id": "sunflower-seeds",
-      "name": "Sunflower seeds",
+      "name": "Sunflower seeds (roasted)",
       "aliases": [
         "sunflower kernels",
         "sunflower seed"
@@ -1721,7 +1721,7 @@
     },
     {
       "id": "almond-milk",
-      "name": "Almond milk",
+      "name": "Almond milk (unsweetened)",
       "aliases": [
         "almond drink",
         "unsweetened almond milk"
@@ -1741,7 +1741,7 @@
     },
     {
       "id": "mixed-nuts",
-      "name": "Mixed nuts",
+      "name": "Mixed nuts (roasted)",
       "aliases": [
         "nut mix",
         "roasted mixed nuts"
@@ -1885,7 +1885,7 @@
     },
     {
       "id": "broccoli",
-      "name": "Broccoli",
+      "name": "Broccoli (boiled)",
       "aliases": [
         "calabrese"
       ],
@@ -1904,7 +1904,7 @@
     },
     {
       "id": "spinach",
-      "name": "Spinach",
+      "name": "Spinach (raw)",
       "aliases": [
         "baby spinach",
         "english spinach"
@@ -1924,7 +1924,7 @@
     },
     {
       "id": "kale",
-      "name": "Kale",
+      "name": "Kale (raw)",
       "aliases": [
         "curly kale",
         "cavolo nero",
@@ -1945,7 +1945,7 @@
     },
     {
       "id": "carrot",
-      "name": "Carrot",
+      "name": "Carrot (raw)",
       "aliases": [
         "carrots"
       ],
@@ -1964,7 +1964,7 @@
     },
     {
       "id": "tomato",
-      "name": "Tomato",
+      "name": "Tomato (raw)",
       "aliases": [
         "tomatoes",
         "cherry tomatoes"
@@ -2046,7 +2046,7 @@
     },
     {
       "id": "onion",
-      "name": "Onion",
+      "name": "Onion (raw)",
       "aliases": [
         "onions",
         "brown onion",
@@ -2067,7 +2067,7 @@
     },
     {
       "id": "garlic",
-      "name": "Garlic",
+      "name": "Garlic (raw)",
       "aliases": [
         "garlic cloves"
       ],
@@ -2086,7 +2086,7 @@
     },
     {
       "id": "red-pepper",
-      "name": "Red pepper",
+      "name": "Red pepper (raw)",
       "aliases": [
         "bell pepper",
         "capsicum",
@@ -2108,7 +2108,7 @@
     },
     {
       "id": "green-beans",
-      "name": "Green beans",
+      "name": "Green beans (boiled)",
       "aliases": [
         "string beans",
         "french beans",
@@ -2129,7 +2129,7 @@
     },
     {
       "id": "cauliflower",
-      "name": "Cauliflower",
+      "name": "Cauliflower (boiled)",
       "aliases": [],
       "group": "veg",
       "emoji": "🥦",
@@ -2146,7 +2146,7 @@
     },
     {
       "id": "cabbage",
-      "name": "Cabbage",
+      "name": "Cabbage (raw)",
       "aliases": [
         "white cabbage",
         "green cabbage"
@@ -2166,7 +2166,7 @@
     },
     {
       "id": "brussels-sprouts",
-      "name": "Brussels sprouts",
+      "name": "Brussels sprouts (boiled)",
       "aliases": [
         "sprouts",
         "brussel sprouts"
@@ -2186,7 +2186,7 @@
     },
     {
       "id": "asparagus",
-      "name": "Asparagus",
+      "name": "Asparagus (boiled)",
       "aliases": [
         "asparagus spears"
       ],
@@ -2205,7 +2205,7 @@
     },
     {
       "id": "mushrooms",
-      "name": "Mushrooms",
+      "name": "Mushrooms (raw)",
       "aliases": [
         "button mushrooms",
         "white mushrooms",
@@ -2227,7 +2227,7 @@
     },
     {
       "id": "sweetcorn",
-      "name": "Sweetcorn",
+      "name": "Sweetcorn (boiled)",
       "aliases": [
         "corn",
         "sweet corn",
@@ -2249,7 +2249,7 @@
     },
     {
       "id": "courgette",
-      "name": "Courgette",
+      "name": "Courgette (raw)",
       "aliases": [
         "zucchini",
         "summer squash"
@@ -2269,7 +2269,7 @@
     },
     {
       "id": "aubergine",
-      "name": "Aubergine",
+      "name": "Aubergine (boiled)",
       "aliases": [
         "eggplant",
         "brinjal"
@@ -2289,7 +2289,7 @@
     },
     {
       "id": "celery",
-      "name": "Celery",
+      "name": "Celery (raw)",
       "aliases": [
         "celery sticks"
       ],
@@ -2308,7 +2308,7 @@
     },
     {
       "id": "beetroot",
-      "name": "Beetroot",
+      "name": "Beetroot (boiled)",
       "aliases": [
         "beets",
         "beet"
@@ -2328,7 +2328,7 @@
     },
     {
       "id": "butternut-squash",
-      "name": "Butternut squash",
+      "name": "Butternut squash (baked)",
       "aliases": [
         "butternut",
         "squash",
@@ -2349,7 +2349,7 @@
     },
     {
       "id": "parsnip",
-      "name": "Parsnip",
+      "name": "Parsnip (boiled)",
       "aliases": [
         "parsnips"
       ],
@@ -2368,7 +2368,7 @@
     },
     {
       "id": "leek",
-      "name": "Leek",
+      "name": "Leek (boiled)",
       "aliases": [
         "leeks"
       ],
@@ -2406,7 +2406,7 @@
     },
     {
       "id": "snow-peas",
-      "name": "Mangetout",
+      "name": "Mangetout (raw)",
       "aliases": [
         "snow peas",
         "sugar snap peas",
@@ -2428,7 +2428,7 @@
     },
     {
       "id": "bean-sprouts",
-      "name": "Bean sprouts",
+      "name": "Bean sprouts (raw)",
       "aliases": [
         "mung bean sprouts",
         "beansprouts"
@@ -2448,7 +2448,7 @@
     },
     {
       "id": "artichoke",
-      "name": "Artichoke",
+      "name": "Artichoke (boiled)",
       "aliases": [
         "globe artichoke",
         "artichoke hearts"
@@ -2468,7 +2468,7 @@
     },
     {
       "id": "okra",
-      "name": "Okra",
+      "name": "Okra (boiled)",
       "aliases": [
         "ladies' fingers",
         "bhindi"
@@ -2488,7 +2488,7 @@
     },
     {
       "id": "pak-choi",
-      "name": "Pak choi",
+      "name": "Pak choi (raw)",
       "aliases": [
         "bok choy",
         "bok choi"
@@ -2589,7 +2589,7 @@
     },
     {
       "id": "spring-onion",
-      "name": "Spring onions",
+      "name": "Spring onions (raw)",
       "aliases": [
         "scallions",
         "green onions",
@@ -3211,7 +3211,7 @@
     },
     {
       "id": "salmon",
-      "name": "Salmon (cooked)",
+      "name": "Salmon (farmed, cooked)",
       "emoji": "🐟",
       "source": {
         "dataset": "SR Legacy",

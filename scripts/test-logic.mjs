@@ -28,19 +28,46 @@ test('arrows point from the guess toward the answer', () => {
   assert.ok(back.cells.every((c) => c.dir === 'down' || c.state === 'match'));
 });
 
-test('bands: match within 5% or the absolute floor, close within 25% or the floor', () => {
-  const protein = P.COLUMNS.find((c) => c.key === 'protein');
-  assert.equal(P.within(20, 20.9, protein.match), true); // 5% of 20.9 is about 1.05
-  assert.equal(P.within(20, 21.2, protein.match), false);
-  assert.equal(P.within(20, 26, protein.close), true); // 25% of 26 is 6.5
-  assert.equal(P.within(20, 27, protein.close), false);
-  assert.equal(P.within(0.3, 0.7, protein.match), true); // tiny values use the 0.5 g floor
-  assert.equal(P.within(0.3, 2.2, protein.close), true); // and the 2 g floor
-  assert.equal(P.within(0.3, 2.4, protein.close), false);
+test('bands: match within a fixed amount, close within 25% or a fixed amount', () => {
+  const col = Object.fromEntries(P.COLUMNS.map((c) => [c.key, c]));
+  // A match is absolute only, however large the numbers.
+  assert.equal(P.within(20, 20.5, col.protein.match), true);
+  assert.equal(P.within(20, 20.9, col.protein.match), false);
+  assert.equal(P.within(500, 510, col.kcal.match), true);
+  assert.equal(P.within(500, 512, col.kcal.match), false);
+  assert.equal(P.within(60, 61, col.carbs.match), true);
+  assert.equal(P.within(60, 61.2, col.carbs.match), false);
+  assert.equal(P.within(50, 50.5, col.fat.match), true);
+  assert.equal(P.within(50, 50.7, col.fat.match), false);
+  assert.equal(P.within(0.3, 0.7, col.protein.match), true);
+  // Close is 25% of the larger value, or a fixed floor for small numbers.
+  assert.equal(P.within(20, 26, col.protein.close), true); // 25% of 26 is 6.5
+  assert.equal(P.within(20, 27, col.protein.close), false);
+  assert.equal(P.within(0.3, 2.2, col.protein.close), true); // the 2 g floor
+  assert.equal(P.within(0.3, 2.4, col.protein.close), false);
 });
 
 test('a wrong food never grades as solved, even when its numbers match', () => {
   for (const a of FOODS) for (const b of FOODS) if (a !== b) assert.equal(P.grade(a, b).solved, false);
+});
+
+test('sameNumbers: a wrong food whose group and every number match', () => {
+  // Cucumber and iceberg lettuce: both veg, within 0.5 g protein, 10 kcal, 1 g carbs, 0.5 g fat.
+  assert.equal(P.sameNumbers(P.grade(food('cucumber'), food('lettuce'))), true);
+  assert.equal(P.sameNumbers(P.grade(food('lettuce'), food('lettuce'))), false); // solved, not a twin
+  assert.equal(P.sameNumbers(P.grade(food('carrot'), food('lettuce'))), false);
+  // Different groups never count, however close the numbers.
+  for (const a of FOODS) for (const b of FOODS) {
+    if (a.group !== b.group) assert.equal(P.sameNumbers(P.grade(a, b)), false);
+  }
+});
+
+test('the worked example in the help is a real guess: white rice against pinto beans', () => {
+  const g = P.grade(food('white-rice'), food('pinto-beans'));
+  assert.equal(g.group.state, 'far');
+  assert.deepEqual(g.cells.map((c) => [c.value, c.state, c.dir]), [
+    [2.7, 'far', 'up'], [130, 'close', 'up'], [28.2, 'close', 'down'], [0.3, 'match', null],
+  ]);
 });
 
 test('day numbers follow the local calendar', () => {
@@ -133,4 +160,19 @@ test('stats: the streak counts days played in a row and a day is only counted on
   s = P.recordResult(s, 13, true, 6); // skipped day 12
   assert.deepEqual([s.played, s.won, s.streak, s.best], [3, 2, 1, 2]);
   assert.deepEqual(s.dist, [0, 0, 1, 0, 0, 1]);
+  // A day before the last one recorded (the clock went back, or a flight west) changes nothing.
+  assert.equal(P.recordResult(s, 12, true, 1), s);
+  assert.equal(P.recordResult(s, 1, false, 6), s);
+  s = P.recordResult(s, 14, false, 6);
+  assert.deepEqual([s.played, s.won, s.streak, s.best], [4, 2, 2, 2]);
+});
+
+test('every food name says how the food was measured where it matters', () => {
+  // Vegetables eaten both raw and cooked carry their state; ids never change.
+  for (const id of ['broccoli', 'spinach', 'kale', 'carrot', 'aubergine', 'sweetcorn', 'parsnip']) {
+    assert.match(food(id).name, /\((raw|boiled|baked)\)$/, id);
+  }
+  assert.match(food('soy-milk').name, /sweetened/);
+  assert.equal(P.search(FOODS, 'broccoli')[0].id, 'broccoli');
+  assert.equal(P.search(FOODS, 'soy milk')[0].id, 'soy-milk');
 });

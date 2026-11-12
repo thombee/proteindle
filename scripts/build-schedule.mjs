@@ -4,7 +4,10 @@
 //
 // The order is fixed by SEED, so running this again gives the same file unless the food
 // list changed. After launch, do not regenerate it: that would change answers people have
-// already played. Add new foods to the end of schedule.js by hand instead.
+// already played. The game repeats the list by position (day n + 1 is the first answer
+// again for a list of n), so new answers can be added to the end of schedule.js by hand
+// only until the last scheduled day has been played. After that, adding answers would
+// change the food of days that come round again, so the schedule needs a planned change.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -49,7 +52,9 @@ const repeats = order.filter((id, i) => i > 0 && byId.get(id).group === byId.get
 
 const out = `/*
  * Proteindle answer schedule: day 1 is the first id, and the list repeats when it runs out.
- * Written by scripts/build-schedule.mjs. Once the game is public, add to the end; do not reorder.
+ * Written by scripts/build-schedule.mjs. Once the game is public, do not reorder it. Answers
+ * may be added to the end only until the last scheduled day has been played; after that the
+ * list has wrapped round, and adding to it would change later days, so plan the change instead.
  */
 var PROTEINDLE_SCHEDULE = ${JSON.stringify(order, null, 2)};
 
