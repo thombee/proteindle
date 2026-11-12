@@ -98,51 +98,78 @@
    * Each match-up is { kind, level, left, right, winner: 'left' | 'right', times } where
    * left and right are portions and `times` is how many times the loser's protein the
    * winner has. Only everyday plant foods (tier 1 in the data) are used, and no food
-   * appears twice in a day. Of the seven plant-versus-animal
-   * match-ups, the plant wins three or four: the day decides which, so "always pick the
-   * meat" and "always pick the plant" both score about half.
+   * appears twice in a day.
    *
-   * Plant foods used one day sit out the next, so two days running rarely feel alike.
-   * To keep that cheap, days are worked out in blocks of seven: the first day of a block
-   * starts fresh (so it can repeat a food from the day before) and each later day builds
-   * on the one before.
+   * Of the seven plant-versus-animal match-ups, the plant wins two, three, four or five
+   * (PLANT_WINS gives the odds), drawn per day. Over time the plant wins half, so "always
+   * pick the meat" and "always pick the plant" both score about half, and counting the
+   * day's plant wins does not give the last answers away.
+   *
+   * Plant foods used one day sit out the next. Animal foods are chosen first from those
+   * not used in the two days before, then from those not used the day before, and only
+   * then from any. So two days running rarely feel alike, and the animal foods that fit
+   * few match-ups still turn up often enough. To keep that cheap, days are worked out in
+   * blocks of seven: the first day of a block starts fresh (so it can repeat a food from
+   * the day before) and each later day builds on the ones before.
    */
   function dailyRounds(day, foods, benchmarks) {
-    var first = day - ((((day - 1) % 7) + 7) % 7), rounds = null;
-    for (var d = first; d <= day; d++) {
-      var rested = (rounds || []).reduce(function (ids, r) {
-        [r.left, r.right].forEach(function (p) { if (p.food.group) ids.push(p.food.id); });
-        return ids;
-      }, []);
-      rounds = buildDay(d, foods, benchmarks, rested);
-    }
-    return rounds;
+    var first = day - ((((day - 1) % 7) + 7) % 7), history = [];
+    for (var d = first; d <= day; d++) history.unshift(buildDay(d, foods, benchmarks, history[0] || [], history[1] || []));
+    return history[0];
   }
 
-  // One day's match-ups, leaving out the plant foods whose ids are in `rested`.
-  function buildDay(day, foods, benchmarks, rested) {
+  // How many of the seven plant-versus-animal match-ups the plant wins: [wins, chance].
+  var PLANT_WINS = [[2, 0.15], [3, 0.35], [4, 0.35], [5, 0.15]];
+
+  // The ids of the foods in some days' match-ups, as an object of id: true.
+  function idsIn(days) {
+    var ids = {};
+    days.forEach(function (rounds) { rounds.forEach(function (r) { ids[r.left.food.id] = ids[r.right.food.id] = true; }); });
+    return ids;
+  }
+
+  /*
+   * One day's match-ups, given the match-ups of the day before and the day before that
+   * (empty lists at the start of a block).
+   */
+  function buildDay(day, foods, benchmarks, dayBefore, twoDaysBefore) {
     var rand = rng(Math.imul(day, 2654435761) ^ 0x9e3779b9);
     var plants = [], animals = [];
     foods.forEach(function (f) { if (f.tier === 1) plantPortions(f).forEach(function (p) { plants.push(p); }); });
     benchmarks.forEach(function (b) { animalPortions(b).forEach(function (p) { animals.push(p); }); });
 
     var animalSlots = SLOTS.filter(function (s) { return s.kind === 'animal'; }).length;
+    var wins = PLANT_WINS[PLANT_WINS.length - 1][0], roll = rand();
+    for (var w = 0, sum = 0; w < PLANT_WINS.length; w++) {
+      sum += PLANT_WINS[w][1];
+      if (roll < sum) { wins = PLANT_WINS[w][0]; break; }
+    }
     var plantWins = [];
-    for (var i = 0; i < animalSlots; i++) plantWins.push(i < Math.floor(animalSlots / 2) ? true : i < 2 * Math.floor(animalSlots / 2) ? false : rand() < 0.5);
+    for (var i = 0; i < animalSlots; i++) plantWins.push(i < wins);
     plantWins = shuffle(rand, plantWins);
 
-    var used = {}, rounds = [], animalIndex = 0;
-    rested.forEach(function (id) { used[id] = true; });
+    // Foods already in today's match-ups, plus the plant foods from the day before.
+    var used = {}, yesterday = idsIn([dayBefore]);
+    plants.forEach(function (p) { if (yesterday[p.food.id]) used[p.food.id] = true; });
+    // Animal foods to avoid if possible, from most to least restrictive.
+    var avoid = [idsIn([dayBefore, twoDaysBefore]), yesterday, {}];
+
+    var rounds = [], animalIndex = 0;
     SLOTS.forEach(function (slot) {
-      var wantPlant = slot.kind === 'animal' ? plantWins[animalIndex++] : null;
-      // Try the slot as specified, then without the fixed winner, then at any closeness.
-      var options = candidates(slot, LEVELS[slot.level], wantPlant) ||
-        candidates(slot, LEVELS[slot.level], null) ||
-        candidates(slot, [LEVELS.hard[0], LEVELS.easy[1]], null);
+      var wantPlant = slot.kind === 'animal' ? plantWins[animalIndex++] : null, band = LEVELS[slot.level], options = null;
+      // Try the slot as specified, then without the fixed winner, then at any closeness;
+      // each time avoiding recent animal foods first.
+      [[band, wantPlant], [band, null]].forEach(function (want) {
+        avoid.forEach(function (skip) { options = options || candidates(slot, want[0], want[1], skip); });
+      });
+      options = options || candidates(slot, [LEVELS.hard[0], LEVELS.easy[1]], null, {});
       if (!options) throw new Error('no match-up available for day ' + day);
-      // Pick a plant first, then its opponent, so foods with many possible opponents do not dominate.
-      var ids = Object.keys(options).sort();
-      var pair = pick(rand, options[pick(rand, ids)]);
+      // Choose one food, then its opponent, so foods with many possible opponents do not
+      // dominate. Against an animal food the animal food is chosen first, so each animal
+      // food turns up about as often as the others.
+      var pairs = options[pick(rand, Object.keys(options).sort())];
+      if (slot.kind === 'animal') pairs = pick(rand, groupBy(pairs, 0));
+      var pair = pick(rand, pairs);
       used[pair[0].food.id] = used[pair[1].food.id] = true;
       var plantLeft = rand() < 0.5;
       var left = plantLeft ? pair[0] : pair[1], right = plantLeft ? pair[1] : pair[0];
@@ -154,24 +181,36 @@
     });
     return rounds;
 
-    // Valid pairs for a slot, grouped by the first food's id; null if there are none.
-    function candidates(slot, band, wantPlant) {
-      var others = slot.kind === 'animal' ? animals : plants, out = {}, any = false;
+    /*
+     * Valid pairs [plant, opponent] for a slot, grouped by the id of the food chosen first
+     * (the animal food in a plant-versus-animal slot, else the plant); null if there are
+     * none. Animal foods whose ids are in `skip` are left out.
+     */
+    function candidates(slot, band, wantPlant, skip) {
+      var vsAnimal = slot.kind === 'animal', others = vsAnimal ? animals : plants, out = {}, any = false;
       plants.forEach(function (p) {
         if (used[p.food.id]) return;
         others.forEach(function (o) {
-          if (used[o.food.id] || o.food === p.food) return;
+          if (used[o.food.id] || o.food === p.food || (vsAnimal && skip[o.food.id])) return;
           var hi = Math.max(p.protein, o.protein), lo = Math.min(p.protein, o.protein);
           if (hi < MIN_WINNER || hi - lo < MIN_GAP) return;
           var times = hi / Math.max(lo, 0.1);
           if (times < band[0] || times >= band[1]) return;
           if (wantPlant !== null && (p.protein > o.protein) !== wantPlant) return;
-          (out[p.food.id] = out[p.food.id] || []).push([p, o]);
+          var key = vsAnimal ? o.food.id : p.food.id;
+          (out[key] = out[key] || []).push([p, o]);
           any = true;
         });
       });
       return any ? out : null;
     }
+  }
+
+  // The pairs grouped by the id of the food at `side` (0 or 1), as a list of groups in id order.
+  function groupBy(pairs, side) {
+    var groups = {};
+    pairs.forEach(function (pr) { (groups[pr[side].food.id] = groups[pr[side].food.id] || []).push(pr); });
+    return Object.keys(groups).sort().map(function (id) { return groups[id]; });
   }
 
   // ---- the calendar
@@ -199,11 +238,15 @@
     return TITLES[TITLES.length - 1][1];
   }
 
-  // How the plants did in the day's plant-versus-animal match-ups: { won, of }.
-  function plantTally(rounds) {
-    var versus = rounds.filter(function (r) { return r.kind === 'animal'; });
-    var won = versus.filter(function (r) { return r[r.winner].food.group !== undefined; }).length;
-    return { won: won, of: versus.length };
+  // How the player did on the day's hard match-ups, the closest calls: { right, of }.
+  function closeCalls(rounds, picks) {
+    var right = 0, of = 0;
+    rounds.forEach(function (r, i) {
+      if (r.level !== 'hard') return;
+      of++;
+      if (picks[i] === r.winner) right++;
+    });
+    return { right: right, of: of };
   }
 
   // The result as text: a square per round, right or wrong, and nothing about the foods.
@@ -235,10 +278,10 @@
   }
 
   var api = {
-    ROUNDS: ROUNDS, EPOCH: EPOCH, SLOTS: SLOTS, LEVELS: LEVELS, LARGER_PORTIONS: LARGER_PORTIONS,
+    ROUNDS: ROUNDS, EPOCH: EPOCH, SLOTS: SLOTS, LEVELS: LEVELS, LARGER_PORTIONS: LARGER_PORTIONS, PLANT_WINS: PLANT_WINS,
     portion: portion, plantPortions: plantPortions, animalPortions: animalPortions, dailyRounds: dailyRounds,
     dayNumber: dayNumber, msUntilTomorrow: msUntilTomorrow,
-    score: score, title: title, plantTally: plantTally, shareText: shareText,
+    score: score, title: title, closeCalls: closeCalls, shareText: shareText,
     emptyStats: emptyStats, recordResult: recordResult,
   };
   root.Proteindle = api;

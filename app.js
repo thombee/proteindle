@@ -110,14 +110,27 @@
     save();
   }
 
+  function samePicks(a, b) {
+    return a.length === b.length && a.every(function (p, i) { return p === b[i]; });
+  }
+  // True if the saved game is for this tab's day and is ahead of this tab or at odds with it.
+  function savedIsNewer() {
+    var theirs = store.game;
+    return !!theirs && theirs.day === S.day && theirs.picks.length >= S.picks.length && !samePicks(theirs.picks, S.picks);
+  }
+
   function choose(side) {
     if (S.revealed || finished()) return;
+    if (S.persist) {
+      // Read the store again first, so what another tab has saved is not overwritten. If
+      // that tab has played this day further, or differently, take its game instead of this pick.
+      var fresh = readStore();
+      if (fresh) store = fresh;
+      if (savedIsNewer()) { startGame(S.day, true); return; }
+    }
     S.picks.push(side);
     S.revealed = true;
     if (S.persist) {
-      // Read the store again first, so stats saved by another tab are not overwritten.
-      var fresh = readStore();
-      if (fresh) store = fresh;
       if (finished()) store.stats = P.recordResult(store.stats, S.day, P.score(S.rounds, S.picks));
       snapshot();
     }
@@ -141,7 +154,9 @@
     S.rounds.forEach(function (r, i) {
       var state = i < S.picks.length ? (S.picks[i] === r.winner ? 'right' : 'wrong') : '';
       var label = 'Match-up ' + (i + 1) + ': ' + (state || (i === at ? 'now playing' : 'still to come'));
-      dots.appendChild(el('li', { class: 'dot ' + state + (i === at && !finished() ? ' now' : ''), 'aria-label': label }));
+      dots.appendChild(el('li', { class: 'dot ' + state + (i === at && !finished() ? ' now' : ''), 'aria-label': label }, [
+        state && el('span', { 'aria-hidden': 'true', text: state === 'right' ? '✓' : '✕' }),
+      ]));
     });
   }
 
@@ -203,7 +218,7 @@
       countUp(c.querySelector('.c-protein b'), p.protein);
     });
     var winner = r[r.winner], loser = r[r.winner === 'left' ? 'right' : 'left'];
-    var line = (right ? '✓ Right. ' : '✕ Not this time. ') + winner.food.name + ' has ' + fmt(r.times) + '× the protein.';
+    var line = (right ? '✓ Right. ' : '✕ Not this time. ') + 'At these portions, ' + winner.food.name + ' has ' + fmt(r.times) + '× the protein.';
     $('verdict').className = 'verdict';
     $('verdict').textContent = line;
     $('live').textContent = (right ? 'Right. ' : 'Not this time. ') + sideText(winner) + ': ' + fmt(winner.protein) + ' grams. ' +
@@ -218,7 +233,8 @@
   // ---- the score card
 
   function renderResults(justFinished) {
-    var box = $('results'), points = P.score(S.rounds, S.picks), tally = P.plantTally(S.rounds);
+    var box = $('results'), points = P.score(S.rounds, S.picks), close = P.closeCalls(S.rounds, S.picks);
+    var closeText = close.right === 0 ? 'none of the ' + close.of : close.right === close.of ? 'all ' + close.of : close.right + ' of the ' + close.of;
     $('play').hidden = true;
     box.hidden = false;
     box.textContent = '';
@@ -227,7 +243,7 @@
       el('div', { class: 'score', 'aria-label': points + ' out of ' + P.ROUNDS }, [String(points), el('span', { text: '/' + P.ROUNDS })]),
       el('div', {}, [
         el('h2', { class: 'score-title', text: P.title(points) }),
-        el('p', { class: 'score-sub', text: 'Plants won ' + tally.won + ' of today’s ' + tally.of + ' match-ups against animal foods.' }),
+        el('p', { class: 'score-sub', text: 'You got ' + closeText + ' closest calls.' }),
       ]),
     ]));
     box.appendChild(el('div', { class: 'actions' }, [
@@ -380,6 +396,12 @@
   // ---- wiring
 
   $('next-btn').addEventListener('click', next);
+  // A held Enter or Space key repeats, and focus moves between the cards and Next, so each
+  // repeat would play on. Only the first press of a key counts.
+  document.addEventListener('keydown', function (e) {
+    if (!e.repeat || (e.key !== 'Enter' && e.key !== ' ')) return;
+    if (e.target.closest && e.target.closest('#arena .card, #next-btn')) e.preventDefault();
+  }, true);
   // Left and right arrow keys pick a side.
   document.addEventListener('keydown', function (e) {
     if (dialogOpen() || e.altKey || e.ctrlKey || e.metaKey) return;
@@ -403,7 +425,8 @@
   });
   $('prev-day').addEventListener('click', function () { if (S.day > 1) startGame(S.day - 1, false); });
   $('next-day').addEventListener('click', function () { startGame(S.day + 1, false); });
-  // Another tab saved something: take its copy, and redraw if it has played further than this tab.
+  // Another tab saved something: take its copy, and redraw if it has played this day further
+  // than this tab, or as far but differently.
   window.addEventListener('storage', function (e) {
     if (e.key !== STORE_KEY) return;
     var fresh = readStore();
@@ -415,7 +438,7 @@
     if (theirs && theirs.day > S.day) {
       startGame(today(), true);
     } else if (theirs && theirs.day === S.day) {
-      if (theirs.picks.length > S.picks.length) startGame(S.day, true);
+      if (savedIsNewer()) startGame(S.day, true);
     } else if (S.picks.length) {
       // Their copy has no trace of this tab's day (it was on an earlier one): put ours back.
       snapshot();

@@ -7,7 +7,7 @@ const P = require('../logic.js');
 const { PROTEINDLE_FOODS: FOODS, PROTEINDLE_BENCHMARKS: BENCH } = require('../foods.js');
 const food = (id) => { const f = [...FOODS, ...BENCH].find((x) => x.id === id); assert.ok(f, `no food ${id}`); return f; };
 const isPlant = (p) => FOODS.includes(p.food);
-const DAYS = 200;
+const DAYS = 730; // two years
 const days = Array.from({ length: DAYS }, (_, i) => P.dailyRounds(i + 1, FOODS, BENCH));
 
 test('a portion carries the protein in that much of the food', () => {
@@ -50,20 +50,39 @@ test('every match-up has a clear, correctly named winner within its level', () =
   }
 });
 
-test('plant-versus-animal match-ups have one of each, and plants win three or four of the seven', () => {
-  let plantWins = 0, total = 0;
+test('plant-versus-animal match-ups have one of each, and the plant wins two to five of the seven, half overall', () => {
+  const perDay = [0, 0, 0, 0, 0, 0, 0, 0];
   for (const [i, rounds] of days.entries()) {
     for (const r of rounds) {
       const plants = [r.left, r.right].filter(isPlant).length;
       assert.equal(plants, r.kind === 'animal' ? 1 : 2, `day ${i + 1}`);
     }
-    const t = P.plantTally(rounds);
-    assert.equal(t.of, 7);
-    assert.ok(t.won === 3 || t.won === 4, `day ${i + 1}: plants won ${t.won}`);
-    plantWins += t.won;
-    total += t.of;
+    const versus = rounds.filter((r) => r.kind === 'animal');
+    assert.equal(versus.length, 7);
+    perDay[versus.filter((r) => isPlant(r[r.winner])).length]++;
   }
-  assert.ok(Math.abs(plantWins / total - 0.5) < 0.03, `plants won ${(100 * plantWins / total).toFixed(1)}% overall`);
+  const share = (n) => perDay[n] / DAYS;
+  assert.equal(perDay[0] + perDay[1] + perDay[6] + perDay[7], 0, `plant wins per day: ${perDay}`);
+  // The draw is 15%, 35%, 35% and 15%.
+  for (const [n, want] of P.PLANT_WINS) assert.ok(Math.abs(share(n) - want) < 0.05, `${n} plant wins on ${(100 * share(n)).toFixed(1)}% of days`);
+  const overall = perDay.reduce((sum, days, n) => sum + days * n, 0) / (7 * DAYS);
+  assert.ok(Math.abs(overall - 0.5) < 0.02, `plants won ${(100 * overall).toFixed(1)}% overall`);
+});
+
+test('every animal food turns up often, none too often, and two days running share few', () => {
+  const animalIds = (rounds) => new Set(rounds.flatMap((r) => [r.left, r.right]).filter((p) => !isPlant(p)).map((p) => p.food.id));
+  const perDay = days.map(animalIds);
+  for (const b of BENCH) {
+    const share = perDay.filter((ids) => ids.has(b.id)).length / DAYS;
+    assert.ok(share <= 0.55 && share >= 0.12, `${b.id} is on ${(100 * share).toFixed(1)}% of days`);
+  }
+  let shared = 0, pairs = 0;
+  for (let i = 1; i < DAYS; i++) {
+    if (i % 7 === 0) continue; // the first day of a block starts fresh
+    shared += [...perDay[i]].filter((id) => perDay[i - 1].has(id)).length;
+    pairs++;
+  }
+  assert.ok(shared / pairs < 1.5, `two days running share ${(shared / pairs).toFixed(2)} animal foods on average`);
 });
 
 test('neither side of the screen is favoured', () => {
@@ -112,6 +131,9 @@ test('score, title and share text', () => {
   assert.equal(P.shareText(12, rounds, picks, 'https://example.test').split('\n').at(-1), 'https://example.test');
   const text = P.shareText(12, rounds, picks, '').toLowerCase();
   for (const r of rounds) for (const p of [r.left, r.right]) assert.ok(!text.includes(p.food.name.toLowerCase()), 'share text names no food');
+  assert.deepEqual(P.closeCalls(rounds, picks), { right: 0, of: 3 }); // the last three are the hard ones
+  assert.deepEqual(P.closeCalls(rounds, rounds.map((r) => r.winner)), { right: 3, of: 3 });
+  assert.deepEqual(P.closeCalls(rounds, picks.slice(0, 8)), { right: 0, of: 3 });
   assert.deepEqual([10, 9, 8, 7, 6, 5, 4, 3, 0].map(P.title), ['Perfect plate', 'Protein pro', 'Protein pro', 'Well fed', 'Well fed', 'Getting warmer', 'Getting warmer', 'Tough crowd today', 'Tough crowd today']);
 });
 

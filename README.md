@@ -25,21 +25,22 @@ Open `index.html` in a browser. There is no build step and nothing to install.
 | Smallest contest | the winner has at least 4 g, and at least 0.8 g more than the loser |
 | Plant foods | the 106 everyday ones (tier 1 in the data); none appears twice in a day |
 | Animal foods | 20 |
-| Who wins | of the seven plant-against-animal match-ups, the plant wins three or four |
+| Who wins | of the seven plant-against-animal match-ups, the plant wins 2, 3, 4 or 5, drawn per day with chances of 15%, 35%, 35% and 15% |
 | New day | local midnight; day 1 is 12 November 2026 |
 
-The plant winning about half the time is deliberate and is stated in the game's help. It means neither "always pick the meat" nor "always pick the plant" beats guessing, and it shows plants and animal foods trading wins at realistic portions. Every individual figure is still straight from the data.
+Over time the plant wins half of these match-ups. That is deliberate and is stated in the game's help: it means neither "always pick the meat" nor "always pick the plant" beats guessing, and it shows plants and animal foods trading wins at realistic portions. Because the number of plant wins changes from day to day, counting them does not give away the last answers. Every individual figure is still straight from the data.
 
 Portions are the serving in the food data. Servings of one or two ounces, tablespoons or slices can also appear doubled, and nine animal foods have a larger portion as well (two or three eggs, a whole chicken breast).
 
-Plant foods used one day sit out the next. Days are worked out in blocks of seven so that this stays quick; the first day of a block can repeat a food from the day before.
+Plant foods used one day sit out the next. For a plant-against-animal match-up the animal food is chosen first, evenly among those that fit, so each one turns up about as often as the others allow (pork chop fits fewest match-ups and is on about 15% of days; the most frequent are on about 43%). Animal foods not used in the two days before are preferred, then those not used the day before, then any. Days are worked out in blocks of seven so that this stays quick; the first day of a block can repeat a food from the day before.
 
 Other things the game does:
 
 - **Progress** is kept in the browser's `localStorage` under `proteindle:v2`. There are no accounts and no server. If storage is blocked the game still plays and says progress is not being saved.
+- **The score card** shows the score, how many of the three closest calls (the hard match-ups) the player got, a recap of the day's match-ups, a share button, stats and a countdown to the next day.
 - **The streak** counts days played in a row, whatever the score.
-- **Midnight**: a day nobody has started moves on by itself. A day in progress can be finished and counts for the day it belongs to.
-- **Two tabs** stay in step and do not overwrite each other.
+- **Midnight**: a day nobody has started moves on by itself. A day in progress can be finished, and counts for the day it belongs to, only while the page stays open: reloading or coming back after midnight always starts the new day.
+- **Two tabs** stay in step and do not overwrite each other. A tab that has fallen behind takes the saved game when tapped, rather than recording the tap.
 - **Sharing** copies the score and a row of squares, and never the foods. Set `SITE_URL` in `app.js` to add the game's address.
 
 ## Files

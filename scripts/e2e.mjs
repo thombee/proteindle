@@ -132,6 +132,17 @@ const noSidewaysScroll = async (page, label) => {
   assert.ok(over <= 0, `${label}: page is ${over}px wider than the screen`);
   const clipped = await page.$$eval('.card .c-name, .card .c-portion, .card .c-protein b', (els) => els.filter((e) => e.scrollWidth > e.closest('.card').clientWidth).map((e) => e.textContent));
   assert.deepEqual(clipped, [], `${label}: card text wider than its card`);
+  // The "vs" badge covers no card text.
+  const covered = await page.evaluate(() => {
+    const vs = document.querySelector('#arena .vs');
+    if (!vs || !vs.offsetParent) return [];
+    const a = vs.getBoundingClientRect();
+    return [...document.querySelectorAll('#arena .card .c-name, #arena .card .c-portion, #arena .card .c-protein')].filter((e) => {
+      const b = e.getBoundingClientRect();
+      return a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
+    }).map((e) => e.textContent);
+  });
+  assert.deepEqual(covered, [], `${label}: the vs badge covers card text`);
 };
 
 async function check(name, fn) {
@@ -156,7 +167,7 @@ await check('a full day: right and wrong picks, the score card, sharing, stats a
 
   // A right pick.
   await pick(page, R1[0].winner);
-  assert.match(await page.textContent('#verdict'), /^✓ Right\. /);
+  assert.equal(await page.textContent('#verdict'), `✓ Right. At these portions, ${R1[0][R1[0].winner].food.name} has ${fmt(R1[0].times)}× the protein.`);
   const win = R1[0][R1[0].winner], lose = R1[0][other(R1[0].winner)];
   await page.waitForFunction((want) => document.querySelector('#arena .card.win .c-protein b').textContent === want, fmt(win.protein));
   assert.equal(await page.textContent('#arena .card.lose .c-protein b'), fmt(lose.protein));
@@ -174,7 +185,7 @@ await check('a full day: right and wrong picks, the score card, sharing, stats a
   assert.deepEqual(await cardNames(page), [R1[1].left.food.name, R1[1].right.food.name]);
   assert.match(await page.textContent('#verdict'), /^Match-up 2 of 10$/);
   await pick(page, other(R1[1].winner));
-  assert.match(await page.textContent('#verdict'), /^✕ Not this time\. /);
+  assert.match(await page.textContent('#verdict'), /^✕ Not this time\. At these portions, .+ has [\d.]+× the protein\.$/);
   assert.equal(await page.$eval('#arena .card.lose', (c) => c.classList.contains('picked')), true);
   assert.equal(await dots(page), 'RW........');
   await page.waitForTimeout(800);
@@ -197,8 +208,7 @@ await check('a full day: right and wrong picks, the score card, sharing, stats a
   assert.equal(await page.isHidden('#play'), true);
   assert.equal((await page.textContent('.score')).trim(), '9/10');
   assert.equal(await page.textContent('.score-title'), P.title(9));
-  const tally = P.plantTally(R1);
-  assert.match(await page.textContent('.score-sub'), new RegExp(`Plants won ${tally.won} of today’s ${tally.of} `));
+  assert.equal(await page.textContent('.score-sub'), 'You got all 3 closest calls.');
   assert.equal(await page.$$eval('.recap li', (l) => l.length), 10);
   assert.equal(await page.$$eval('.recap .mark.wrong', (l) => l.length), 1);
   assert.equal(await dots(page), 'RWRRRRRRRR');
@@ -233,6 +243,7 @@ await check('a full day: right and wrong picks, the score card, sharing, stats a
   await playFrom(page, R2, 0, (r) => other(r.winner));
   assert.equal((await page.textContent('.score')).trim(), '0/10');
   assert.equal(await page.textContent('.score-title'), P.title(0));
+  assert.equal(await page.textContent('.score-sub'), 'You got none of the 3 closest calls.');
   assert.equal(await page.textContent('.streak'), '🔥 2 days in a row');
   await page.click('#stats-btn');
   assert.deepEqual(await page.$$eval('#stats .nums b', (b) => b.map((x) => x.textContent)), ['2', '4.5', '2', '2']);
@@ -260,6 +271,22 @@ await check('the keyboard alone can play', async () => {
   await page.keyboard.press('ArrowLeft');
   assert.equal((await saved(page)).game.picks.length, 2);
   await shot(page, '06-help');
+  assert.deepEqual(errors, []);
+  await ctx.close();
+});
+
+await check('holding Enter down makes one move, not several', async () => {
+  const { ctx, page, errors } = await open('/index.html', { time: DAY1 });
+  await page.focus('#arena .card[data-side="left"]');
+  // After the first, each keyboard.down of a key still held is sent with repeat: true.
+  for (let i = 0; i < 6; i++) await page.keyboard.down('Enter');
+  await page.keyboard.up('Enter');
+  assert.deepEqual((await saved(page)).game.picks, ['left']);
+  assert.equal(await page.isVisible('#next-btn'), true, 'the answer to the first match-up is still on screen');
+  assert.equal(await page.evaluate(() => document.activeElement.id), 'next-btn');
+  // A fresh press moves on.
+  await page.keyboard.press('Enter');
+  assert.deepEqual(await cardNames(page), [R1[1].left.food.name, R1[1].right.food.name]);
   assert.deepEqual(errors, []);
   await ctx.close();
 });
@@ -327,6 +354,26 @@ await check('two tabs share progress and do not overwrite each other', async () 
   assert.equal(after.stats.played, 1);
   assert.equal(after.game.picks.length, 10);
   assert.deepEqual([...a.errors, ...b.errors, ...c.errors], []);
+  await ctx.close();
+});
+
+await check('a tab that is behind takes the saved game instead of overwriting it', async () => {
+  const ctx = await newContext();
+  const a = await openTab(ctx, '/index.html', { time: DAY1 });
+  const b = await openTab(ctx, '/index.html', { time: DAY1, scripts: [deafToOtherTabs] });
+  await pick(a.page, R1[0].winner);
+  await a.page.click('#next-btn');
+  await pick(a.page, other(R1[1].winner));
+  await a.page.click('#next-btn');
+  // Tab B missed both picks and still shows match-up 1. Tapping a card there records nothing
+  // and brings it up to date.
+  assert.deepEqual(await cardNames(b.page), [R1[0].left.food.name, R1[0].right.food.name]);
+  await b.page.click('#arena .card[data-side="left"]');
+  assert.deepEqual((await saved(a.page)).game.picks, [R1[0].winner, other(R1[1].winner)]);
+  assert.deepEqual(await cardNames(b.page), [R1[2].left.food.name, R1[2].right.food.name]);
+  assert.equal(await dots(b.page), 'RW........');
+  assert.equal(await b.page.isHidden('#next-btn'), true, 'no answer is shown for the ignored tap');
+  assert.deepEqual([...a.errors, ...b.errors], []);
   await ctx.close();
 });
 
