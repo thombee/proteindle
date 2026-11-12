@@ -53,7 +53,7 @@
       ],
       "group": "beans",
       "emoji": "🫘",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 173735,
@@ -759,7 +759,7 @@
       ],
       "group": "grains",
       "emoji": "🍝",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 168910,
@@ -1028,7 +1028,7 @@
       ],
       "group": "grains",
       "emoji": "🍞",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 172684,
@@ -1554,7 +1554,7 @@
         "description": "Nuts, coconut meat, raw"
       },
       "serving": {
-        "label": "1 piece (2\" x 2\" x ½\")",
+        "label": "1 piece",
         "grams": 45
       }
     },
@@ -1708,7 +1708,7 @@
       ],
       "group": "nuts",
       "emoji": "🥄",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 168588,
@@ -1830,7 +1830,7 @@
       ],
       "group": "veg",
       "emoji": "🍠",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 168483,
@@ -1971,7 +1971,7 @@
       ],
       "group": "veg",
       "emoji": "🍅",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 170457,
@@ -1991,7 +1991,7 @@
       ],
       "group": "veg",
       "emoji": "🥒",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 168409,
@@ -2054,7 +2054,7 @@
       ],
       "group": "veg",
       "emoji": "🧅",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 170000,
@@ -2116,7 +2116,7 @@
       ],
       "group": "veg",
       "emoji": "🫛",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 169141,
@@ -2133,7 +2133,7 @@
       "aliases": [],
       "group": "veg",
       "emoji": "🥦",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 170397,
@@ -2153,7 +2153,7 @@
       ],
       "group": "veg",
       "emoji": "🥬",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 169975,
@@ -2173,7 +2173,7 @@
       ],
       "group": "veg",
       "emoji": "🥬",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 169971,
@@ -2192,7 +2192,7 @@
       ],
       "group": "veg",
       "emoji": "🌱",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 168390,
@@ -2214,7 +2214,7 @@
       ],
       "group": "veg",
       "emoji": "🍄",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 169251,
@@ -2256,7 +2256,7 @@
       ],
       "group": "veg",
       "emoji": "🥒",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 169291,
@@ -2713,7 +2713,7 @@
       ],
       "group": "fruit",
       "emoji": "🫐",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 171711,
@@ -2753,7 +2753,7 @@
       ],
       "group": "fruit",
       "emoji": "🍓",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 167755,
@@ -2792,7 +2792,7 @@
       ],
       "group": "fruit",
       "emoji": "🍐",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 169118,
@@ -2811,7 +2811,7 @@
       ],
       "group": "fruit",
       "emoji": "🍑",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 169928,
@@ -2831,7 +2831,7 @@
       ],
       "group": "fruit",
       "emoji": "🥭",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 169910,
@@ -2850,7 +2850,7 @@
       ],
       "group": "fruit",
       "emoji": "🍍",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 169124,
@@ -2869,7 +2869,7 @@
       ],
       "group": "fruit",
       "emoji": "🍉",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 167765,
@@ -2890,7 +2890,7 @@
       ],
       "group": "fruit",
       "emoji": "🥝",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "SR Legacy",
         "fdcId": 168153,
@@ -3277,6 +3277,176 @@
       "serving": {
         "label": "3 slices",
         "grams": 34.5
+      },
+      "servingSource": "chosen"
+    },
+    {
+      "id": "tuna",
+      "name": "Tuna (canned in water)",
+      "emoji": "🥫",
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 173709,
+        "description": "Fish, tuna, light, canned in water, drained solids (Includes foods for USDA's Food Distribution Program)"
+      },
+      "serving": {
+        "label": "3 oz",
+        "grams": 85
+      }
+    },
+    {
+      "id": "turkey-breast",
+      "name": "Turkey breast (roasted)",
+      "emoji": "🦃",
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 171496,
+        "description": "Turkey, whole, breast, meat only, cooked, roasted"
+      },
+      "serving": {
+        "label": "3 oz",
+        "grams": 85
+      }
+    },
+    {
+      "id": "pork-chop",
+      "name": "Pork chop (grilled)",
+      "emoji": "🐖",
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 167827,
+        "description": "Pork, fresh, loin, center loin (chops), bone-in, separable lean and fat, cooked, broiled"
+      },
+      "serving": {
+        "label": "1 chop",
+        "grams": 157
+      }
+    },
+    {
+      "id": "prawns",
+      "name": "Prawns (cooked)",
+      "emoji": "🦐",
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 171971,
+        "description": "Crustaceans, shrimp, mixed species, cooked, moist heat (may contain additives to retain moisture)"
+      },
+      "serving": {
+        "label": "3 oz",
+        "grams": 85
+      }
+    },
+    {
+      "id": "cottage-cheese",
+      "name": "Cottage cheese",
+      "emoji": "🫙",
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 172179,
+        "description": "Cheese, cottage, creamed, large or small curd"
+      },
+      "serving": {
+        "label": "4 oz",
+        "grams": 113
+      }
+    },
+    {
+      "id": "ham",
+      "name": "Ham (sliced)",
+      "emoji": "🍖",
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 173864,
+        "description": "Ham, sliced, regular (approximately 11% fat)"
+      },
+      "serving": {
+        "label": "2 slices",
+        "grams": 56
+      }
+    },
+    {
+      "id": "sausages",
+      "name": "Pork sausages (fried)",
+      "emoji": "🌭",
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 174578,
+        "description": "Pork sausage, link/patty, cooked, pan-fried"
+      },
+      "serving": {
+        "label": "2 links",
+        "grams": 46
+      },
+      "servingSource": "chosen"
+    },
+    {
+      "id": "steak",
+      "name": "Sirloin steak (grilled)",
+      "emoji": "🥩",
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 168727,
+        "description": "Beef, top sirloin, steak, separable lean and fat, trimmed to 1/8\" fat, all grades, cooked, broiled"
+      },
+      "serving": {
+        "label": "3 oz",
+        "grams": 85
+      }
+    },
+    {
+      "id": "mozzarella",
+      "name": "Mozzarella",
+      "emoji": "🧀",
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 170845,
+        "description": "Cheese, mozzarella, whole milk"
+      },
+      "serving": {
+        "label": "1 oz",
+        "grams": 28.35
+      }
+    },
+    {
+      "id": "cod",
+      "name": "Cod (baked)",
+      "emoji": "🐟",
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 171956,
+        "description": "Fish, cod, Atlantic, cooked, dry heat"
+      },
+      "serving": {
+        "label": "3 oz",
+        "grams": 85
+      }
+    },
+    {
+      "id": "yogurt",
+      "name": "Plain yogurt (whole milk)",
+      "emoji": "🥣",
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 171284,
+        "description": "Yogurt, plain, whole milk"
+      },
+      "serving": {
+        "label": "1 pot (170 g)",
+        "grams": 170
+      }
+    },
+    {
+      "id": "fish-fingers",
+      "name": "Fish fingers",
+      "emoji": "🐠",
+      "source": {
+        "dataset": "SR Legacy",
+        "fdcId": 174195,
+        "description": "Fish, fish sticks, frozen, prepared"
+      },
+      "serving": {
+        "label": "3 fish fingers",
+        "grams": 84
       },
       "servingSource": "chosen"
     }

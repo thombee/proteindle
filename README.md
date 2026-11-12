@@ -1,6 +1,8 @@
 # Proteindle
 
-A daily guessing game about protein in plant foods. Each day there is one mystery plant food and six guesses to find it. Every guess is a food, and its tiles say how the mystery food compares per 100 g: same food group or not, and more or less protein, calories, carbs and fat. When the round ends, a card shows the food's protein per serving, per 100 g and per 100 calories next to eight familiar animal foods.
+A daily game: which has more protein? Each day brings ten match-ups. Each one shows two foods in everyday portions, such as a cup of cooked black beans against a large egg, and the player taps the one with more protein. The answer shows both figures, and after ten the player gets a score to share.
+
+An earlier version of the game, in which the player worked out a mystery food from Wordle-style tiles, is kept on the `guess-the-food` branch.
 
 ## Play it
 
@@ -9,40 +11,45 @@ Open `index.html` in a browser. There is no build step and nothing to install.
 - `index.html?day=7` plays day 7 in preview mode: any day can be played and nothing is saved.
 - `npm run bundle` writes `dist/proteindle.html`, the whole game as one file, and `dist/proteindle-preview.html`, the same in preview mode.
 
-## How the game works
+## How a day is put together
 
-| Rule | Value | Where |
-|---|---|---|
-| Guesses | 6 | `MAX_GUESSES` in `logic.js` |
-| Hint (first letter) | offered after 4 guesses; given free when a wrong food matches every tile | `HINT_AFTER` in `logic.js` |
-| Green tile | within 0.5 g of protein, 10 calories, 1 g of carbs or 0.5 g of fat | `COLUMNS` in `logic.js` |
-| Yellow tile | within 25%, or within 2 g of protein, 25 calories, 3 g of carbs or 2 g of fat when that allows more | `COLUMNS` in `logic.js` |
-| New puzzle | local midnight; day 1 is 12 November 2026 | `EPOCH` in `logic.js` |
-| Answers | the 83 "tier 1" foods, in the fixed order in `schedule.js`, then repeating from day 84 | `schedule.js` |
-| Guessable foods | all 156 plant foods | `foods.js` |
+`dailyRounds` in `logic.js` builds the ten match-ups from the day number, so everyone gets the same ones.
+
+| Rule | Value |
+|---|---|
+| Match-ups a day | 10: seven plant against animal, three plant against plant |
+| Order | 3 easy, 4 medium, 3 hard |
+| Easy | the winner has 1.8 to 4 times the loser's protein |
+| Medium | 1.35 to 1.8 times |
+| Hard | 1.12 to 1.35 times |
+| Smallest contest | the winner has at least 4 g, and at least 0.8 g more than the loser |
+| Plant foods | the 106 everyday ones (tier 1 in the data); none appears twice in a day |
+| Animal foods | 20 |
+| Who wins | of the seven plant-against-animal match-ups, the plant wins three or four |
+| New day | local midnight; day 1 is 12 November 2026 |
+
+The plant winning about half the time is deliberate and is stated in the game's help. It means neither "always pick the meat" nor "always pick the plant" beats guessing, and it shows plants and animal foods trading wins at realistic portions. Every individual figure is still straight from the data.
+
+Portions are the serving in the food data. Servings of one or two ounces, tablespoons or slices can also appear doubled, and nine animal foods have a larger portion as well (two or three eggs, a whole chicken breast).
+
+Plant foods used one day sit out the next. Days are worked out in blocks of seven so that this stays quick; the first day of a block can repeat a food from the day before.
 
 Other things the game does:
 
-- **The top row** collects what the tiles have shown so far, for example "protein between 15.3 and 21.2", and the first letter once the hint is known.
-- **The hint** shows the answer's first letter in the top row. The player can ask for it after four guesses, which adds 💡 to the shared result. Some foods have the same group and numbers to within the green bands (iceberg lettuce and cucumber, for example), so when a wrong guess matches every tile the game gives the letter for free, without the 💡.
-- **Midnight**: a page left open moves to the new day by itself if the round has not been started. A started round can be finished after midnight and counts for its own day; a finished round then offers the new plant.
-- **The food list** puts foods from groups that are still possible first, and strikes out foods already guessed.
-- **The pantry**: a food the player has guessed on any earlier day shows its protein in the list from then on, so regular players get better.
-- **The bonus round** after each puzzle asks which has more protein, today's food or an animal food, by serving, by weight or by calorie. The question is picked by `bonusQuestion` in `logic.js` and is the same for everyone. It is chosen for being a close call, not for the plant winning.
-- **The streak** counts days played in a row, win or lose.
-- **Sharing** copies an emoji grid that shows the pattern of the guesses and never the food. Set `SITE_URL` in `app.js` to add the game's address to it.
-
-Progress is kept in the browser's `localStorage` under `proteindle:v1`. There are no accounts and no server. Tabs open on the game keep each other up to date through the `storage` event, and a settings change reads the saved progress again before writing, so one tab cannot overwrite another's round. If the browser will not let the page use storage, the game still plays and says under the board that progress can't be saved.
+- **Progress** is kept in the browser's `localStorage` under `proteindle:v2`. There are no accounts and no server. If storage is blocked the game still plays and says progress is not being saved.
+- **The streak** counts days played in a row, whatever the score.
+- **Midnight**: a day nobody has started moves on by itself. A day in progress can be finished and counts for the day it belongs to.
+- **Two tabs** stay in step and do not overwrite each other.
+- **Sharing** copies the score and a row of squares, and never the foods. Set `SITE_URL` in `app.js` to add the game's address.
 
 ## Files
 
 | File | What it is |
 |---|---|
 | `index.html`, `style.css` | The page |
-| `app.js` | Draws the board, handles input, saves progress |
-| `logic.js` | The rules: grading, schedule, search, bonus question, share text, stats. No DOM, so it runs in Node too |
+| `app.js` | Shows the match-ups and the score card, saves progress |
+| `logic.js` | The rules: portions, the day's match-ups, scoring, share text, stats. No DOM, so it runs in Node too |
 | `foods.js` | Generated food data. Do not edit by hand |
-| `schedule.js` | The order of daily answers |
 | `data/picks.json` | The hand-curated list of foods and the USDA record each one uses |
 | `data/SOURCES.md` | Where the data comes from and how to regenerate it |
 
@@ -52,28 +59,20 @@ Progress is kept in the browser's `localStorage` under `proteindle:v1`. There ar
 npm install          # once, only needed for the browser tests
 npm test             # rule checks against the real data, and colour contrast (Node only)
 npm run e2e          # plays the game in headless Google Chrome; SHOTS=dir saves screenshots
-BROWSER=webkit npm run e2e    # the same in Playwright's WebKit; BROWSER=firefox for Firefox
-                              # (install them once: npx playwright-core install webkit firefox)
+BROWSER=webkit npm run e2e    # the same in Safari's engine (also BROWSER=firefox)
 npm run bundle       # single-file builds in dist/
-npm run simulate     # estimates how hard the game is with simulated players
 npm run foods        # rebuilds foods.js from the USDA downloads (see data/SOURCES.md)
 ```
 
 ## The food data
 
-Every number comes from USDA FoodData Central, which is public domain. `data/picks.json` names the exact record for each food, and `scripts/build-foods.mjs` copies the numbers out and refuses to run if a record does not resolve. Each food is measured as its name says: beans, lentils, rice and pasta are cooked, and a vegetable that is eaten both raw and cooked carries its state, as in "Broccoli (boiled)" or "Spinach (raw)".
-
-Two foods (tempeh and falafel) have no fibre figure in their source record. The game does not grade on fibre, so they are included with fibre left empty.
+Every number comes from USDA FoodData Central, which is public domain. `data/picks.json` names the exact record for each food, and `scripts/build-foods.mjs` copies the numbers out and refuses to run if a record does not resolve. Each food's name says what state it is in ("Lentils (cooked)", "Spinach (raw)").
 
 Foods that are missing because no trustworthy record was found: seitan, nutritional yeast and red lentils.
 
-## Difficulty
-
-`npm run simulate` plays thousands of rounds with a player who only roughly knows each food's figures. With the current rules a casual player who takes the hint wins about 96% of rounds in about four guesses, and without the hint about 72%. A player who knows the figures well wins about 90% without the hint and 99% with it. The free hint for a wrong food with matching numbers is part of the model. These come from a rough model, not from real players.
-
 ## Before going public
 
-- **The name is taken.** Two live sites already use "Proteindle": a biology game at proteindle.github.io and a higher/lower food game at proteindle.vercel.app. Decide whether to rename.
+- **The name is taken.** Two live sites already use "Proteindle": a biology game at proteindle.github.io and, closer to this one, a "which food has more protein" game at proteindle.vercel.app. Decide whether to rename.
 - Set `SITE_URL` in `app.js`.
-- Do not rerun `scripts/build-schedule.mjs` once people are playing. The schedule repeats by position (day 84 is the first answer again), so adding answers changes which food every repeated day gets. New answers can be appended to the end of `schedule.js` only until the last scheduled day (day 83, 2 February 2027) has been played; after that, extending the schedule needs a planned change, for example a second list that starts on a given day.
+- Changing the food list or the rules in `dailyRounds` changes the match-ups of every day, so do it between days, not while people are mid-game.
 - The research behind the design is in `~/Documents/research/daily-games-what-makes-them-stick-2026-11.md`.

@@ -35,10 +35,6 @@ const dark = { ...light, ...vars(block(':root', darkAt)) };
 const high = vars(block(':root[data-contrast="high"]'));
 const MODES = { light, dark, 'light, high contrast': { ...light, ...high }, 'dark, high contrast': { ...dark, ...high } };
 
-// Tile text drawn with reduced opacity blends toward the tile colour; use the faintest.
-const opacity = (sel) => { const m = /opacity\s*:\s*([\d.]+)/.exec(block(sel)); return m ? Number(m[1]) : 1; };
-const tileAlpha = Math.min(opacity('.t-main'), opacity('.t-main small'), opacity('.t-sub'));
-
 const rgb = (hex) => {
   let h = hex.slice(1);
   if (h.length === 3) h = [...h].map((c) => c + c).join('');
@@ -54,24 +50,25 @@ function ratio(fg, bg, alpha = 1) {
   return (hi + 0.05) / (lo + 0.05);
 }
 
-// [text, background, what it is, opacity]
+// [text, background, what it is]
 const PAIRS = [
-  ['match-ink', 'match', 'match tile', tileAlpha],
-  ['close-ink', 'close', 'close tile', tileAlpha],
-  ['far-ink', 'far', 'far tile', tileAlpha],
-  ['muted', 'bg', 'muted text on the page', 1],
-  ['muted', 'card', 'muted text on a card', 1],
-  ['muted', 'blank', 'muted text on a fact box', 1],
-  ['ink', 'bg', 'text on the page', 1],
-  ['ink', 'card', 'text on a card', 1],
-  ['accent', 'bg', 'accent text on the page', 1],
+  ['right-ink', 'right', 'tick on a right answer'],
+  ['wrong-ink', 'wrong', 'cross on a wrong answer'],
+  ['accent-ink', 'accent', 'main button'],
+  ['muted', 'bg', 'muted text on the page'],
+  ['muted', 'card', 'muted text on a card'],
+  ['muted', 'blank', 'muted text on a portion label'],
+  ['ink', 'bg', 'text on the page'],
+  ['ink', 'card', 'text on a card'],
+  ['card', 'ink', 'light text on a dark badge'],
+  ['accent', 'bg', 'accent text on the page'],
 ];
 
 let failed = 0;
 for (const [mode, v] of Object.entries(MODES)) {
-  for (const [fg, bg, what, alpha] of PAIRS) {
+  for (const [fg, bg, what] of PAIRS) {
     if (!v[fg] || !v[bg]) throw new Error(`style.css: --pd-${fg} or --pd-${bg} is missing in ${mode} mode`);
-    const r = ratio(v[fg], v[bg], alpha);
+    const r = ratio(v[fg], v[bg]);
     const ok = r >= MIN;
     if (!ok) failed++;
     console.log(`${ok ? 'ok  ' : 'FAIL'}  ${r.toFixed(2).padStart(5)}:1  ${mode.padEnd(20)} ${what} (--pd-${fg} ${v[fg]} on --pd-${bg} ${v[bg]})`);

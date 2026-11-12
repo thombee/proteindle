@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 // Sanity checks on the generated foods.js:
-//   node scripts/check-foods.mjs          summary, energy flags, tier 1 near-duplicates
+//   node scripts/check-foods.mjs          counts and energy flags
 //   node scripts/check-foods.mjs --table  also print every food's values
-// Exits non-zero if any tier 1 near-duplicate pair remains.
 
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
@@ -33,23 +32,6 @@ for (const f of [...foods, ...bench]) {
 }
 if (!flagged) console.log('  none');
 
-// Tier 1 pairs in the same group the tiles cannot tell apart.
-console.log('\nTier 1 near-duplicates (same group, <1 g protein, <15 kcal, <2 g carbs, <1 g fat):');
-const t1 = foods.filter((f) => f.tier === 1);
-let pairs = 0;
-for (let i = 0; i < t1.length; i++) {
-  for (let j = i + 1; j < t1.length; j++) {
-    const a = t1[i], b = t1[j];
-    if (a.group !== b.group) continue;
-    if (Math.abs(a.protein - b.protein) < 1 && Math.abs(a.kcal - b.kcal) < 15 &&
-        Math.abs(a.carbs - b.carbs) < 2 && Math.abs(a.fat - b.fat) < 1) {
-      pairs++;
-      console.log(`  ${a.group}: ${a.id} (${a.protein}p ${a.kcal}k ${a.carbs}c ${a.fat}f) ~ ${b.id} (${b.protein}p ${b.kcal}k ${b.carbs}c ${b.fat}f)`);
-    }
-  }
-}
-if (!pairs) console.log('  none');
-
 if (process.argv.includes('--table')) {
   console.log('\nid                   grp    t  kcal  prot  carb   fat  fibre  serving');
   for (const f of [...foods].sort((a, b) => GROUPS.indexOf(a.group) - GROUPS.indexOf(b.group) || b.protein - a.protein)) {
@@ -63,4 +45,3 @@ if (process.argv.includes('--table')) {
   }
 }
 
-process.exit(pairs ? 1 : 0);
